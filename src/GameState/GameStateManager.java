@@ -1,34 +1,40 @@
 package GameState;
 
-import java.util.ArrayList;
-
 public class GameStateManager {
 	
 	private GameState[] gameStates;
-	private int currentState;
+	private static int currentState;
 	
-	public static final int NUMGAMESTATES = 2;
+	public static final int NUMGAMESTATES = 3;
 	public static final int MENUSTATE = 0;
 	public static final int LEVEL1STATE = 1;
 
 	public static final int LEVEL2STATE = 2;
-	
+	public static final int WINNINGSTATE = 5;
+
+
 	public GameStateManager() {
-		
+
 		gameStates = new GameState[NUMGAMESTATES];
 		
 		currentState = MENUSTATE;
 		loadState(currentState);
 		
 	}
+
+	public static int getCurrentState() {
+		return currentState;
+	}
 	
-	private void loadState(int state) {
+	public void loadState(int state) {
 		if(state == MENUSTATE)
 			gameStates[state] = new MenuState(this);
 		if(state == LEVEL1STATE)
 			gameStates[state] = new Level1State(this);
 		if(state == LEVEL2STATE)
 			gameStates[state] = new Level2State(this);
+		if (state == WINNINGSTATE)
+			gameStates[state] = new WinningState(this);
 	}
 	
 	private void unloadState(int state) {
