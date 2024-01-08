@@ -24,7 +24,7 @@ public class Player extends MapObject {
 	private boolean firing;
 	private int fireCost;
 	private int fireBallDamage;
-	private ArrayList<FireBall> fireBalls;
+	private ArrayList<Projectile> projectiles;
 	
 	// scratch
 	private boolean scratching;
@@ -75,7 +75,7 @@ public class Player extends MapObject {
 		
 		fireCost = 100;
 		fireBallDamage = 5;
-		fireBalls = new ArrayList<FireBall>();
+		projectiles = new ArrayList<Projectile>();
 		
 		scratchDamage = 2;
 		scratchRange = 40;
@@ -183,10 +183,10 @@ public class Player extends MapObject {
 			}
 			
 			// fireballs
-			for(int j = 0; j < fireBalls.size(); j++) {
-				if(fireBalls.get(j).intersects(e)) {
+			for(int j = 0; j < projectiles.size(); j++) {
+				if(projectiles.get(j).intersects(e)) {
 					e.hit(fireBallDamage);
-					fireBalls.get(j).setHit();
+					projectiles.get(j).setHit();
 					break;
 				}
 			}
@@ -289,17 +289,17 @@ public class Player extends MapObject {
 		if(firing && currentAction != FIREBALL) {
 			if(fire > fireCost) {
 				fire -= fireCost;
-				FireBall fb = new FireBall(tileMap, facingRight);
+				Projectile fb = new Projectile(tileMap, facingRight);
 				fb.setPosition(x, y);
-				fireBalls.add(fb);
+				projectiles.add(fb);
 			}
 		}
 		
 		// update fireballs
-		for(int i = 0; i < fireBalls.size(); i++) {
-			fireBalls.get(i).update();
-			if(fireBalls.get(i).shouldRemove()) {
-				fireBalls.remove(i);
+		for(int i = 0; i < projectiles.size(); i++) {
+			projectiles.get(i).update();
+			if(projectiles.get(i).shouldRemove()) {
+				projectiles.remove(i);
 				i--;
 			}
 		}
@@ -387,8 +387,8 @@ public class Player extends MapObject {
 		setMapPosition();
 		
 		// draw fireballs
-		for(int i = 0; i < fireBalls.size(); i++) {
-			fireBalls.get(i).draw(g);
+		for(int i = 0; i < projectiles.size(); i++) {
+			projectiles.get(i).draw(g);
 		}
 		
 		// draw player
