@@ -25,6 +25,7 @@ public class Player extends MapObject {
 	private int fireCost;
 	private int fireBallDamage;
 	private ArrayList<Projectile> projectiles;
+
 	
 	// scratch
 	private boolean scratching;
@@ -199,7 +200,18 @@ public class Player extends MapObject {
 		}
 		
 	}
-	
+
+	// check dumbbell collision
+	public void checkDumbbells(ArrayList<Dumbbell> dumbbells){
+		for(int i = 0; i < dumbbells.size(); i++) {
+			Dumbbell d = dumbbells.get(i);
+			if (intersects(d)) {
+				System.out.println("Smash!");
+				d.setHit();
+				d.update();
+			}
+		}
+	}
 	public void hit(int damage) {
 		if(flinching) return;
 		health -= damage;
@@ -240,11 +252,12 @@ public class Player extends MapObject {
 		}
 		
 		// cannot move while attacking, except in air
+		/*
 		if(
 		(currentAction == SCRATCHING || currentAction == FIREBALL) &&
 		!(jumping || falling)) {
 			dx = 0;
-		}
+		}*/
 		
 		// jumping
 		if(jumping && !falling) {

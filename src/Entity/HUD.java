@@ -19,7 +19,7 @@ public class HUD {
 					"/HUD/hud.gif"
 				)
 			);
-			font = new Font("Arial", Font.PLAIN, 14);
+			font = new Font("Courier New", Font.BOLD, 14);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -32,12 +32,12 @@ public class HUD {
 		g.setFont(font);
 		g.setColor(Color.WHITE);
 		g.drawString(
-			player.getHealth() + "/" + player.getMaxHealth(),
+			player.getHealth()+"",
 			30,
 			25
 		);
 		g.drawString(
-			player.getFire() / 100 + "/" + player.getMaxFire() / 100,
+			player.getFire() / 100+"",
 			30,
 			45
 		);
