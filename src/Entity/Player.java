@@ -221,8 +221,17 @@ public class Player extends MapObject {
 	public void hit(int damage) {
 		if(flinching) return;
 		health -= damage;
-		if(health < 0) health = 0;
-		if(health == 0) dead = true;
+		if(health < 0)
+		{
+			health = 0;
+		}
+
+		//Death Condition
+		if(health == 0)
+		{
+			dead = true;
+		}
+
 		flinching = true;
 		flinchTimer = System.nanoTime();
 	}
@@ -286,9 +295,22 @@ public class Player extends MapObject {
 		}
 		
 	}
+
+//player is dead
+	public boolean isDead() {
+		return dead;
+	}
 	
 	public void update() {
-		
+		//check if dead or alive
+		if (y > tileMap.getHeight()) {
+			// Player has fallen off the map, set health to 0 and mark as dead
+			health = 0;
+			dead = true;
+		}
+
+
+
 		// update position
 		getNextPosition();
 		checkTileMapCollision();

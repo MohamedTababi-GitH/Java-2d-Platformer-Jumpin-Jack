@@ -109,7 +109,17 @@ public class Level1State extends GameState {
 	}
 
 	public void update() {
-		
+
+		//player is dead
+
+		// Check for player death
+		if (player.isDead()) {
+			// Transition to game over state
+			gsm.setState(GameStateManager.GAMEOVERSTATE);
+		}
+
+
+
 		// update player
 		player.update();
 		tileMap.setPosition(
