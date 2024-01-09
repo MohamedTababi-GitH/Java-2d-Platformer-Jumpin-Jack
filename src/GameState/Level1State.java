@@ -22,6 +22,7 @@ public class Level1State extends GameState {
 	private ArrayList<Explosion> explosions;
 	
 	private HUD hud;
+	Trophy trophy;
 	
 	private AudioPlayer bgMusic;
 	
@@ -45,6 +46,7 @@ public class Level1State extends GameState {
 		
 		populateEnemies();
 		spawnDumbbells();
+		spawnTrophy();
 		
 		explosions = new ArrayList<Explosion>();
 		
@@ -74,6 +76,12 @@ public class Level1State extends GameState {
 		}
 
 		
+	}
+
+	//spawn trophy
+	private void spawnTrophy(){
+		trophy =new Trophy(tileMap);
+		trophy.setPosition(150,100);
 	}
 
 	private void spawnDumbbells(){
@@ -110,6 +118,11 @@ public class Level1State extends GameState {
 		// attack enemies
 		player.checkAttack(enemies);
 		player.checkDumbbells(dumbbells);
+
+		//special trophy collision check
+		if (trophy.intersects(player)){
+			System.out.println("Smash");
+		}
 		
 		// update all enemies
 		for(int i = 0; i < enemies.size(); i++) {
@@ -135,7 +148,7 @@ public class Level1State extends GameState {
 	}
 	
 	public void draw(Graphics2D g) {
-		
+
 		// draw bg
 		bg.draw(g);
 		
@@ -144,6 +157,10 @@ public class Level1State extends GameState {
 		
 		// draw player
 		player.draw(g);
+
+		//draw trophy
+		trophy.draw(g);
+
 		
 		// draw enemies
 		for(int i = 0; i < enemies.size(); i++) {
@@ -161,7 +178,7 @@ public class Level1State extends GameState {
 				(int)tileMap.getx(), (int)tileMap.gety());
 			explosions.get(i).draw(g);
 		}
-		
+
 		// draw hud
 		hud.draw(g);
 		

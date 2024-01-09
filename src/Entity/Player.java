@@ -1,5 +1,7 @@
 package Entity;
 
+import GameState.GameState;
+import GameState.GameStateManager;
 import TileMap.*;
 import Audio.AudioPlayer;
 
@@ -201,14 +203,18 @@ public class Player extends MapObject {
 		
 	}
 
+
 	// check dumbbell collision
 	public void checkDumbbells(ArrayList<Dumbbell> dumbbells){
 		for(int i = 0; i < dumbbells.size(); i++) {
 			Dumbbell d = dumbbells.get(i);
 			if (intersects(d)) {
-				System.out.println("Smash!");
+				sfx.get("jump").play();
+				if (health < maxHealth)
+					health+=1;
 				d.setHit();
 				d.update();
+				dumbbells.remove(d);
 			}
 		}
 	}

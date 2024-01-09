@@ -33,13 +33,8 @@ public class HUD {
 		g.setColor(Color.WHITE);
 		g.drawString(
 			player.getHealth()+"",
-			30,
+			20,
 			25
-		);
-		g.drawString(
-			player.getFire() / 100+"",
-			30,
-			45
 		);
 		
 	}

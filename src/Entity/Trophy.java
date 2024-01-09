@@ -6,14 +6,14 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Dumbbell extends MapObject {
+public class Trophy extends MapObject {
 
     private boolean hit;
     private boolean remove;
     private BufferedImage[] sprites;
     private BufferedImage[] hitSprites;
 
-    public Dumbbell(TileMap tm) {
+    public Trophy(TileMap tm) {
 
         super(tm);
 
@@ -32,7 +32,7 @@ public class Dumbbell extends MapObject {
 
             BufferedImage spritesheet = ImageIO.read(
                     getClass().getResourceAsStream(
-                            "/Sprites/Player/dumbbellplaceholder.gif"
+                            "/Sprites/Player/trophyplaceholder.gif"
                     )
             );
 
