@@ -16,8 +16,8 @@ public class Burg extends Enemy{
 
         super(tm);
 
-        moveSpeed = 0.3;
-        maxSpeed = 0.3;
+        moveSpeed = 0.5;
+        maxSpeed = 0.5;
         fallSpeed = 0.2;
         maxFallSpeed = 10.0;
 
@@ -26,7 +26,7 @@ public class Burg extends Enemy{
         cwidth = 20;
         cheight = 20;
 
-        health = maxHealth = 2;
+        health = maxHealth = 4;
         damage = 1;
 
         // load sprites

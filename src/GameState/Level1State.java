@@ -62,6 +62,7 @@ public class Level1State extends GameState {
 		enemies = new ArrayList<Enemy>();
 		
 		Slugger s;
+		Burg b;
 		Point[] points = new Point[] {
 			new Point(200, 100),
 			new Point(860, 200),
@@ -74,6 +75,11 @@ public class Level1State extends GameState {
 			s.setPosition(points[i].x, points[i].y);
 			enemies.add(s);
 		}
+		for(int i = 0; i < points.length; i++) {
+			b = new Burg(tileMap);
+			b.setPosition(points[i].x, points[i].y);
+			enemies.add(b);
+		}
 
 		
 	}
@@ -81,7 +87,7 @@ public class Level1State extends GameState {
 	//spawn trophy
 	private void spawnTrophy(){
 		trophy =new Trophy(tileMap);
-		trophy.setPosition(150,100);
+		trophy.setPosition(3100,200);
 	}
 
 	private void spawnDumbbells(){
@@ -91,10 +97,10 @@ public class Level1State extends GameState {
 		Point[] points = {
 				new Point(100,200),
 				new Point(200,100),
-				new Point(100,300),
-				new Point(200,400),
-				new Point(500,400),
-				new Point(300,500)
+				new Point(1000,200),
+				new Point(2000,200),
+				new Point(1500,100),
+				new Point(300,200)
 		};
 		for(int i = 0; i < points.length; i++) {
 			d = new Dumbbell(tileMap);
