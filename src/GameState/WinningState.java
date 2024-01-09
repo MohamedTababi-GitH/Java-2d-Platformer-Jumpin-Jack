@@ -18,7 +18,7 @@ public class WinningState extends GameState {
         try {
 
         titleFont = new Font("Century Gothic", Font.PLAIN, 28);
-        bg = new Background("/Backgrounds/staywinning.png", 1);
+        bg = new Background("/Backgrounds/staywinning.gif", 1);
         bg.setVector(-0.1, 0);
 
     }
