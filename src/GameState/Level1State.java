@@ -18,9 +18,11 @@ public class Level1State extends GameState {
 	private Player player;
 	
 	private ArrayList<Enemy> enemies;
+	ArrayList<Dumbbell> dumbbells;
 	private ArrayList<Explosion> explosions;
 	
 	private HUD hud;
+	Trophy trophy;
 	
 	private AudioPlayer bgMusic;
 	
@@ -43,6 +45,8 @@ public class Level1State extends GameState {
 		player.setPosition(100, 100);
 		
 		populateEnemies();
+		spawnDumbbells();
+		spawnTrophy();
 		
 		explosions = new ArrayList<Explosion>();
 		
@@ -70,9 +74,35 @@ public class Level1State extends GameState {
 			s.setPosition(points[i].x, points[i].y);
 			enemies.add(s);
 		}
+
 		
 	}
-	
+
+	//spawn trophy
+	private void spawnTrophy(){
+		trophy =new Trophy(tileMap);
+		trophy.setPosition(150,100);
+	}
+
+	private void spawnDumbbells(){
+		dumbbells = new ArrayList<Dumbbell>();
+		Dumbbell d;
+
+		Point[] points = {
+				new Point(100,200),
+				new Point(200,100),
+				new Point(100,300),
+				new Point(200,400),
+				new Point(500,400),
+				new Point(300,500)
+		};
+		for(int i = 0; i < points.length; i++) {
+			d = new Dumbbell(tileMap);
+			d.setPosition(points[i].x, points[i].y);
+			dumbbells.add(d);
+		}
+	}
+
 	public void update() {
 		
 		// update player
@@ -87,6 +117,12 @@ public class Level1State extends GameState {
 		
 		// attack enemies
 		player.checkAttack(enemies);
+		player.checkDumbbells(dumbbells);
+
+		//special trophy collision check
+		if (trophy.intersects(player)){
+			System.out.println("Smash");
+		}
 		
 		// update all enemies
 		for(int i = 0; i < enemies.size(); i++) {
@@ -112,7 +148,7 @@ public class Level1State extends GameState {
 	}
 	
 	public void draw(Graphics2D g) {
-		
+
 		// draw bg
 		bg.draw(g);
 		
@@ -121,10 +157,19 @@ public class Level1State extends GameState {
 		
 		// draw player
 		player.draw(g);
+
+		//draw trophy
+		trophy.draw(g);
+
 		
 		// draw enemies
 		for(int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).draw(g);
+		}
+
+		// draw dumbbells
+		for(int i = 0; i < dumbbells.size(); i++) {
+			dumbbells.get(i).draw(g);
 		}
 		
 		// draw explosions
@@ -133,7 +178,7 @@ public class Level1State extends GameState {
 				(int)tileMap.getx(), (int)tileMap.gety());
 			explosions.get(i).draw(g);
 		}
-		
+
 		// draw hud
 		hud.draw(g);
 		
