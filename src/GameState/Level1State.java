@@ -28,7 +28,6 @@ public class Level1State extends GameState {
 	
 	public Level1State(GameStateManager gsm) {
 		this.gsm = gsm;
-		init();
 	}
 	
 	public void init() {
