@@ -26,8 +26,8 @@ public class MenuState extends GameState {
 		
 		try {
 			
-			bg = new Background("/Backgrounds/menubg.gif", 1);
-			bg.setVector(1, 1);
+			bg = new Background("/Backgrounds/pinkcitybg.gif", 1);
+			bg.setVector(0.7, 0);
 			
 			titleColor = new Color(0, 64, 64);
 			titleFont = new Font(
@@ -91,16 +91,16 @@ public class MenuState extends GameState {
 	}
 	
 	public void keyPressed(int k) {
-		if(k == KeyEvent.VK_ENTER){
+		if(k == KeyEvent.VK_SPACE){
 			select();
 		}
-		if(k == KeyEvent.VK_UP) {
+		if(k == KeyEvent.VK_W) {
 			currentChoice--;
 			if(currentChoice == -1) {
 				currentChoice = options.length - 1;
 			}
 		}
-		if(k == KeyEvent.VK_DOWN) {
+		if(k == KeyEvent.VK_S) {
 			currentChoice++;
 			if(currentChoice == options.length) {
 				currentChoice = 0;

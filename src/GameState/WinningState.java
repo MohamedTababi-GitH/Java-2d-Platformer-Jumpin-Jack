@@ -43,7 +43,11 @@ public class WinningState extends GameState {
     public void keyPressed(int k) {
         if (k == KeyEvent.VK_ENTER) {
             // Restart the game when the Enter key is pressed
-            gsm.setState(GameStateManager.MENUSTATE);
+            gsm.setState(GameStateManager.LEVEL2STATE);
+        }
+        if (k == KeyEvent.VK_SPACE) {
+            // Restart the game when the Enter key is pressed
+            gsm.setState(GameStateManager.LEVEL2STATE);
         }
     }
     public void keyReleased(int k) {

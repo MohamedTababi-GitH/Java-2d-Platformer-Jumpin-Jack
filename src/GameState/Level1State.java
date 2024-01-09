@@ -38,7 +38,7 @@ public class Level1State extends GameState {
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(1);
 		
-		bg = new Background("/Backgrounds/grassbg1.gif", 0.1);
+		bg = new Background("/Backgrounds/pinkcitybg.gif", 0.1);
 		
 		player = new Player(tileMap);
 		player.setPosition(100, 100);
@@ -114,6 +114,8 @@ public class Level1State extends GameState {
 
 		// Check for player death
 		if (player.isDead()) {
+			bgMusic.stop();
+			//play a jingle here
 			// Transition to game over state
 			gsm.setState(GameStateManager.GAMEOVERSTATE);
 		}
@@ -136,6 +138,8 @@ public class Level1State extends GameState {
 
 		//special trophy collision check
 		if (trophy.intersects(player)){
+			bgMusic.stop();
+			//play a jingle here
 			WinningState l2 = new WinningState(gsm);
 			l2.init();
 			gsm.setState(GameStateManager.WINNINGSTATE);
@@ -204,21 +208,21 @@ public class Level1State extends GameState {
 	}
 	
 	public void keyPressed(int k) {
-		if(k == KeyEvent.VK_LEFT) player.setLeft(true);
-		if(k == KeyEvent.VK_RIGHT) player.setRight(true);
-		if(k == KeyEvent.VK_UP) player.setUp(true);
-		if(k == KeyEvent.VK_DOWN) player.setDown(true);
-		if(k == KeyEvent.VK_W) player.setJumping(true);
+		if(k == KeyEvent.VK_A) player.setLeft(true);
+		if(k == KeyEvent.VK_D) player.setRight(true);
+		if(k == KeyEvent.VK_W) player.setUp(true);
+		if(k == KeyEvent.VK_S) player.setDown(true);
+		if(k == KeyEvent.VK_SPACE) player.setJumping(true);
 		if(k == KeyEvent.VK_E) player.setGliding(true);
 		if(k == KeyEvent.VK_R) player.setScratching();
 		if(k == KeyEvent.VK_F) player.setFiring();
 	}
 	
 	public void keyReleased(int k) {
-		if(k == KeyEvent.VK_LEFT) player.setLeft(false);
-		if(k == KeyEvent.VK_RIGHT) player.setRight(false);
-		if(k == KeyEvent.VK_UP) player.setUp(false);
-		if(k == KeyEvent.VK_DOWN) player.setDown(false);
+		if(k == KeyEvent.VK_A) player.setLeft(false);
+		if(k == KeyEvent.VK_D) player.setRight(false);
+		if(k == KeyEvent.VK_W) player.setUp(false);
+		if(k == KeyEvent.VK_S) player.setDown(false);
 		if(k == KeyEvent.VK_W) player.setJumping(false);
 		if(k == KeyEvent.VK_E) player.setGliding(false);
 	}
