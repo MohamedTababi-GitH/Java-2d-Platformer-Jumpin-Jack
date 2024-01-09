@@ -303,7 +303,7 @@ public class Player extends MapObject {
 	
 	public void update() {
 		//check if dead or alive
-		if (y > tileMap.getHeight()) {
+		if (y > tileMap.getHeight()-getHeight()/2) {
 			// Player has fallen off the map, set health to 0 and mark as dead
 			health = 0;
 			dead = true;

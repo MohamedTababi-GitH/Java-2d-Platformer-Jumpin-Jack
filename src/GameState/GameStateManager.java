@@ -7,12 +7,12 @@ public class GameStateManager {
 	private GameState[] gameStates;
 	private int currentState;
 	
-	public static final int NUMGAMESTATES = 2;
+	public static final int NUMGAMESTATES = 21;
 	public static final int MENUSTATE = 0;
 	public static final int LEVEL1STATE = 1;
     public static final int LEVEL2STATE = 2;
     public static final int WINNINGSTATE = 5;
-    public static final int GAMEOVERSTATE = 2;
+    public static final int GAMEOVERSTATE = 20;
 
 
     public GameStateManager() {
@@ -46,7 +46,7 @@ public class GameStateManager {
 		unloadState(currentState);
 		currentState = state;
 		loadState(currentState);
-		//gameStates[currentState].init();
+		gameStates[currentState].init();
 	}
 	
 	public void update() {

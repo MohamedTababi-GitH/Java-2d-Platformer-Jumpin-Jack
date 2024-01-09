@@ -69,7 +69,7 @@ public class GamePanel extends JPanel
 		long elapsed;
 		long wait;
 		
-		// game loop
+		// game loopy
 		while(running) {
 			
 			start = System.nanoTime();
