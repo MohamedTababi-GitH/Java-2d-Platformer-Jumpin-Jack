@@ -45,7 +45,7 @@ public class GameStateManager {
 		unloadState(currentState);
 		currentState = state;
 		loadState(currentState);
-		//gameStates[currentState].init();
+		gameStates[currentState].init();
 	}
 	
 	public void update() {
