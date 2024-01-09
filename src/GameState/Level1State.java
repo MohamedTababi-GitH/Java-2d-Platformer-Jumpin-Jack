@@ -121,10 +121,10 @@ public class Level1State extends GameState {
 
 		//special trophy collision check
 		if (trophy.intersects(player)){
-			gsm.setState(2);
-			gsm.update();
-			Level2State l2 = new Level2State(gsm);
+			MenuState l2 = new MenuState(gsm);
 			l2.init();
+			gsm.setState(GameStateManager.MENUSTATE);
+			gsm.update();
 		}
 		
 		// update all enemies
