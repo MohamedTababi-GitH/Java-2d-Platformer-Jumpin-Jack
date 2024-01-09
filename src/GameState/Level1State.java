@@ -56,7 +56,7 @@ public class Level1State extends GameState {
 	private void populateEnemies() {
 		
 		enemies = new ArrayList<Enemy>();
-		
+		Burg b;
 		Slugger s;
 		Point[] points = new Point[] {
 			new Point(200, 100),
@@ -69,6 +69,11 @@ public class Level1State extends GameState {
 			s = new Slugger(tileMap);
 			s.setPosition(points[i].x, points[i].y);
 			enemies.add(s);
+		}
+		for(int i = 0; i < points.length; i++) {
+			b = new Burg(tileMap);
+			b.setPosition(points[i].x + 20, points[i].y + 20);
+			enemies.add(b);
 		}
 		
 	}
