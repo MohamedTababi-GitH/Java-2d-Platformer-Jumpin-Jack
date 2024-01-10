@@ -7,13 +7,15 @@ public class GameStateManager {
 	private GameState[] gameStates;
 	private int currentState;
 	
-	public static final int NUMGAMESTATES = 2;
+	public static final int NUMGAMESTATES = 21;
 	public static final int MENUSTATE = 0;
 	public static final int LEVEL1STATE = 1;
+    public static final int LEVEL2STATE = 2;
+    public static final int WINNINGSTATE = 5;
+    public static final int GAMEOVERSTATE = 20;
 
-	public static final int LEVEL2STATE = 2;
-	
-	public GameStateManager() {
+
+    public GameStateManager() {
 		
 		gameStates = new GameState[NUMGAMESTATES];
 		
@@ -23,13 +25,18 @@ public class GameStateManager {
 	}
 	
 	private void loadState(int state) {
-		if(state == MENUSTATE)
-			gameStates[state] = new MenuState(this);
-		if(state == LEVEL1STATE)
-			gameStates[state] = new Level1State(this);
-		if(state == LEVEL2STATE)
-			gameStates[state] = new Level2State(this);
-	}
+        if(state == MENUSTATE)
+            gameStates[state] = new MenuState(this);
+        if(state == LEVEL1STATE)
+            gameStates[state] = new Level1State(this);
+        if(state == LEVEL2STATE)
+            gameStates[state] = new Level2State(this);
+        if (state == WINNINGSTATE)
+            gameStates[state] = new WinningState(this);
+        if(state == GAMEOVERSTATE)
+            gameStates[state] = new GameOverState(this);
+
+    }
 	
 	private void unloadState(int state) {
 		gameStates[state] = null;
@@ -39,7 +46,7 @@ public class GameStateManager {
 		unloadState(currentState);
 		currentState = state;
 		loadState(currentState);
-		//gameStates[currentState].init();
+		gameStates[currentState].init();
 	}
 	
 	public void update() {

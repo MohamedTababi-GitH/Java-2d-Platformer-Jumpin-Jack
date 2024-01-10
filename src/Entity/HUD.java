@@ -8,18 +8,24 @@ public class HUD {
 	
 	private Player player;
 	
-	private BufferedImage image;
+	private BufferedImage[] image;
 	private Font font;
 	
 	public HUD(Player p) {
 		player = p;
 		try {
-			image = ImageIO.read(
+			image = new BufferedImage[2];
+			image[0] = ImageIO.read(
 				getClass().getResourceAsStream(
-					"/HUD/hud.gif"
+						"/HUD/heart.gif"
 				)
 			);
-			font = new Font("Arial", Font.PLAIN, 14);
+			image[1] = ImageIO.read(
+					getClass().getResourceAsStream(
+							"/HUD/points.gif"
+					)
+			);
+			font = new Font("Courier New", Font.BOLD, 14);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -27,19 +33,42 @@ public class HUD {
 	}
 	
 	public void draw(Graphics2D g) {
-		
-		g.drawImage(image, 0, 10, null);
+
+		for(int i = 0; i < player.getHealth(); i++){
+			g.drawImage(image[0], 8 + (i * 16), 10, null);
+		}
+
+		g.drawImage(image[1], 8, 27, null);
 		g.setFont(font);
-		g.setColor(Color.WHITE);
+		g.setColor(Color.getHSBColor(0.85F,0.13F,0.13F));
+		//OUTLINE
 		g.drawString(
-			player.getHealth() + "/" + player.getMaxHealth(),
-			30,
-			25
+			player.getScore()+"",
+			26,
+			40
 		);
 		g.drawString(
-			player.getFire() / 100 + "/" + player.getMaxFire() / 100,
-			30,
-			45
+				player.getScore()+"",
+				24,
+				40
+		);
+		g.drawString(
+				player.getScore()+"",
+				25,
+				41
+		);
+		g.drawString(
+				player.getScore()+"",
+				25,
+				39
+		);
+
+		//ACTUAL FONT
+		g.setColor(Color.WHITE);
+		g.drawString(
+				player.getScore()+"",
+				25,
+				40
 		);
 		
 	}

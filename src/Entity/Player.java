@@ -1,5 +1,7 @@
 package Entity;
 
+import GameState.GameState;
+import GameState.GameStateManager;
 import TileMap.*;
 import Audio.AudioPlayer;
 
@@ -12,6 +14,7 @@ import java.util.HashMap;
 public class Player extends MapObject {
 	
 	// player stuff
+	private int score;
 	private int health;
 	private int maxHealth;
 	private int fire;
@@ -24,7 +27,8 @@ public class Player extends MapObject {
 	private boolean firing;
 	private int fireCost;
 	private int fireBallDamage;
-	private ArrayList<FireBall> fireBalls;
+	private ArrayList<Projectile> projectiles;
+
 	
 	// scratch
 	private boolean scratching;
@@ -37,7 +41,7 @@ public class Player extends MapObject {
 	// animations
 	private ArrayList<BufferedImage[]> sprites;
 	private final int[] numFrames = {
-		2, 8, 1, 2, 4, 2, 5
+		2, 8, 1, 1, 4, 2, 5
 	};
 	
 	// animation actions
@@ -69,15 +73,16 @@ public class Player extends MapObject {
 		stopJumpSpeed = 0.3;
 		
 		facingRight = true;
+
 		
 		health = maxHealth = 5;
-		fire = maxFire = 2500;
+		fire = maxFire = 500;
 		
-		fireCost = 200;
+		fireCost = 100;
 		fireBallDamage = 5;
-		fireBalls = new ArrayList<FireBall>();
+		projectiles = new ArrayList<Projectile>();
 		
-		scratchDamage = 8;
+		scratchDamage = 2;
 		scratchRange = 40;
 		
 		// load sprites
@@ -183,10 +188,10 @@ public class Player extends MapObject {
 			}
 			
 			// fireballs
-			for(int j = 0; j < fireBalls.size(); j++) {
-				if(fireBalls.get(j).intersects(e)) {
+			for(int j = 0; j < projectiles.size(); j++) {
+				if(projectiles.get(j).intersects(e)) {
 					e.hit(fireBallDamage);
-					fireBalls.get(j).setHit();
+					projectiles.get(j).setHit();
 					break;
 				}
 			}
@@ -199,12 +204,39 @@ public class Player extends MapObject {
 		}
 		
 	}
-	
+
+
+	// check dumbbell collision
+	public int checkDumbbells(ArrayList<Dumbbell> dumbbells){
+		int dumbAmt = 0;
+		for(int i = 0; i < dumbbells.size(); i++) {
+			Dumbbell d = dumbbells.get(i);
+			if (intersects(d)) {
+				sfx.get("jump").play();
+				if (health < maxHealth)
+					health+=1;
+				d.setHit();
+				d.update();
+				dumbbells.remove(d);
+				dumbAmt++;
+			}
+		}
+		return dumbAmt;
+	}
 	public void hit(int damage) {
 		if(flinching) return;
 		health -= damage;
-		if(health < 0) health = 0;
-		if(health == 0) dead = true;
+		if(health < 0)
+		{
+			health = 0;
+		}
+
+		//Death Condition
+		if(health == 0)
+		{
+			dead = true;
+		}
+
 		flinching = true;
 		flinchTimer = System.nanoTime();
 	}
@@ -240,11 +272,12 @@ public class Player extends MapObject {
 		}
 		
 		// cannot move while attacking, except in air
+		/*
 		if(
 		(currentAction == SCRATCHING || currentAction == FIREBALL) &&
 		!(jumping || falling)) {
 			dx = 0;
-		}
+		}*/
 		
 		// jumping
 		if(jumping && !falling) {
@@ -267,9 +300,22 @@ public class Player extends MapObject {
 		}
 		
 	}
+
+//player is dead
+	public boolean isDead() {
+		return dead;
+	}
 	
 	public void update() {
-		
+		//check if dead or alive
+		if (y > tileMap.getHeight()-getHeight()/2) {
+			// Player has fallen off the map, set health to 0 and mark as dead
+			health = 0;
+			dead = true;
+		}
+
+
+
 		// update position
 		getNextPosition();
 		checkTileMapCollision();
@@ -289,17 +335,17 @@ public class Player extends MapObject {
 		if(firing && currentAction != FIREBALL) {
 			if(fire > fireCost) {
 				fire -= fireCost;
-				FireBall fb = new FireBall(tileMap, facingRight);
+				Projectile fb = new Projectile(tileMap, facingRight);
 				fb.setPosition(x, y);
-				fireBalls.add(fb);
+				projectiles.add(fb);
 			}
 		}
 		
 		// update fireballs
-		for(int i = 0; i < fireBalls.size(); i++) {
-			fireBalls.get(i).update();
-			if(fireBalls.get(i).shouldRemove()) {
-				fireBalls.remove(i);
+		for(int i = 0; i < projectiles.size(); i++) {
+			projectiles.get(i).update();
+			if(projectiles.get(i).shouldRemove()) {
+				projectiles.remove(i);
 				i--;
 			}
 		}
@@ -387,8 +433,8 @@ public class Player extends MapObject {
 		setMapPosition();
 		
 		// draw fireballs
-		for(int i = 0; i < fireBalls.size(); i++) {
-			fireBalls.get(i).draw(g);
+		for(int i = 0; i < projectiles.size(); i++) {
+			projectiles.get(i).draw(g);
 		}
 		
 		// draw player
@@ -403,7 +449,14 @@ public class Player extends MapObject {
 		super.draw(g);
 		
 	}
-	
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
 }
 
 
