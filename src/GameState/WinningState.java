@@ -23,7 +23,7 @@ public class WinningState extends GameState {
 
             jingle = new AudioPlayer("/SFX/youwin!.mp3");
             jingle.play();
-        titleFont = new Font("Century Gothic", Font.PLAIN, 28);
+        titleFont = new Font("Century Gothic", Font.PLAIN, 18);
         bg = new Background("/Backgrounds/staywinning.gif", 1);
         bg.setVector(-0.1, 0);
 
@@ -41,9 +41,14 @@ public class WinningState extends GameState {
     }
 
     public void draw(Graphics2D g) {
-        g.setColor(Color.GREEN);
+        g.setColor(Color.BLACK);
         g.setFont(titleFont);
-        g.drawString("Congratulations! You Won!", 80, 70);
+        g.drawString("Congratulations! You Won!", 49, 70);
+        g.drawString("Congratulations! You Won!", 51, 70);
+        g.drawString("Congratulations! You Won!", 50, 69);
+        g.drawString("Congratulations! You Won!", 50, 71);
+        g.setColor(Color.GREEN);
+        g.drawString("Congratulations! You Won!", 50, 70);
     }
 
     public void keyPressed(int k) {

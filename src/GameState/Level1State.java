@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Level1State extends GameState {
 	
 	private TileMap tileMap;
+	private int score;
 	private Background bg;
 	
 	private Player player;
@@ -33,7 +34,7 @@ public class Level1State extends GameState {
 	public void init() {
 		
 		tileMap = new TileMap(30);
-		tileMap.loadTiles("/Tilesets/grasstileset.gif");
+		tileMap.loadTiles("/Tilesets/citytileset.png");
 		tileMap.loadMap("/Maps/level1-1.map");
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(1);
@@ -119,7 +120,8 @@ public class Level1State extends GameState {
 			gsm.setState(GameStateManager.GAMEOVERSTATE);
 		}
 
-
+		//reset score tally for current frame
+		score = 0;
 
 		// update player
 		player.update();
@@ -133,7 +135,7 @@ public class Level1State extends GameState {
 		
 		// attack enemies
 		player.checkAttack(enemies);
-		player.checkDumbbells(dumbbells);
+		score += player.checkDumbbells(dumbbells) * 10;
 
 		//special trophy collision check
 		if (trophy.intersects(player)){
@@ -145,6 +147,8 @@ public class Level1State extends GameState {
 			bg.update();
 			gsm.update();
 		}
+
+
 		
 		// update all enemies
 		for(int i = 0; i < enemies.size(); i++) {
@@ -155,6 +159,7 @@ public class Level1State extends GameState {
 				i--;
 				explosions.add(
 					new Explosion(e.getx(), e.gety()));
+				score += 50;
 			}
 		}
 		
@@ -166,7 +171,8 @@ public class Level1State extends GameState {
 				i--;
 			}
 		}
-		
+		//update player score
+		player.setScore(player.getScore() + score);
 	}
 	
 	public void draw(Graphics2D g) {

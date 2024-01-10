@@ -14,6 +14,7 @@ import java.util.HashMap;
 public class Player extends MapObject {
 	
 	// player stuff
+	private int score;
 	private int health;
 	private int maxHealth;
 	private int fire;
@@ -72,6 +73,7 @@ public class Player extends MapObject {
 		stopJumpSpeed = 0.3;
 		
 		facingRight = true;
+
 		
 		health = maxHealth = 5;
 		fire = maxFire = 500;
@@ -205,7 +207,8 @@ public class Player extends MapObject {
 
 
 	// check dumbbell collision
-	public void checkDumbbells(ArrayList<Dumbbell> dumbbells){
+	public int checkDumbbells(ArrayList<Dumbbell> dumbbells){
+		int dumbAmt = 0;
 		for(int i = 0; i < dumbbells.size(); i++) {
 			Dumbbell d = dumbbells.get(i);
 			if (intersects(d)) {
@@ -215,8 +218,10 @@ public class Player extends MapObject {
 				d.setHit();
 				d.update();
 				dumbbells.remove(d);
+				dumbAmt++;
 			}
 		}
+		return dumbAmt;
 	}
 	public void hit(int damage) {
 		if(flinching) return;
@@ -444,7 +449,14 @@ public class Player extends MapObject {
 		super.draw(g);
 		
 	}
-	
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
 }
 
 
