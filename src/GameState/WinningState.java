@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+
+import Audio.AudioPlayer;
 import TileMap.Background;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -13,10 +15,14 @@ public class WinningState extends GameState {
     private Background bg;
     private Font titleFont;
 
+    private AudioPlayer jingle;
+
     public WinningState(GameStateManager gsm) {
         this.gsm = gsm;
         try {
 
+            jingle = new AudioPlayer("/SFX/youwin!.mp3");
+            jingle.play();
         titleFont = new Font("Century Gothic", Font.PLAIN, 28);
         bg = new Background("/Backgrounds/staywinning.gif", 1);
         bg.setVector(-0.1, 0);

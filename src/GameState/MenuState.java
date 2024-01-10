@@ -1,5 +1,6 @@
 package GameState;
 
+import Audio.AudioPlayer;
 import TileMap.Background;
 
 import java.awt.*;
@@ -19,13 +20,16 @@ public class MenuState extends GameState {
 	private Font titleFont;
 	
 	private Font font;
+
+	private AudioPlayer music;
 	
 	public MenuState(GameStateManager gsm) {
 		
 		this.gsm = gsm;
 		
 		try {
-			
+			music = new AudioPlayer("/Music/title.mp3");
+			music.play();
 			bg = new Background("/Backgrounds/pinkcitybg.gif", 1);
 			bg.setVector(0.7, 0);
 			
@@ -80,6 +84,7 @@ public class MenuState extends GameState {
 	
 	private void select() {
 		if(currentChoice == 0) {
+			music.stop();
 			gsm.setState(GameStateManager.LEVEL1STATE);
 		}
 		if(currentChoice == 1) {

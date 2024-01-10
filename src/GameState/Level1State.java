@@ -51,7 +51,7 @@ public class Level1State extends GameState {
 		
 		hud = new HUD(player);
 		
-		bgMusic = new AudioPlayer("/Music/level1-1.mp3");
+		bgMusic = new AudioPlayer("/Music/title.mp3");
 		bgMusic.play();
 		
 	}
@@ -115,7 +115,6 @@ public class Level1State extends GameState {
 		// Check for player death
 		if (player.isDead()) {
 			bgMusic.stop();
-			//play a jingle here
 			// Transition to game over state
 			gsm.setState(GameStateManager.GAMEOVERSTATE);
 		}
