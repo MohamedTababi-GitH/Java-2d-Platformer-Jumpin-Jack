@@ -14,6 +14,8 @@ public class Burg extends Enemy{
     private EnemyState state;
     private int startcounter = 0;
 
+    boolean plummeting = false;
+
     private BufferedImage[] sprites;
 
     public Burg(TileMap tm) {
@@ -32,8 +34,10 @@ public class Burg extends Enemy{
         cwidth = 20;
         cheight = 20;
 
-        health = maxHealth = 5;
+        health = maxHealth = 1;
         damage = 1;
+
+
 
 
 
@@ -153,7 +157,7 @@ public class Burg extends Enemy{
         lastX = x;
         lastY = y;
 
-        if(health == 1){
+        if(health == 1 && caughtIn4k()){
             state = EnemyState.LOW_HEALTH;
         }
         if(caughtIn4k()){
@@ -167,7 +171,7 @@ public class Burg extends Enemy{
         } else if (playerX > x) {
             rushRight();
         }
-        if(health == 1){
+        if(health == 1 && caughtIn4k()){
             state = EnemyState.LOW_HEALTH;
         }
         if (!caughtIn4k()){
@@ -177,11 +181,21 @@ public class Burg extends Enemy{
     }
 
     private void lowHealth() {
+        if(!bottomLeft && !bottomRight){
+            plummeting = true;
+            dy += fallSpeed;
+            if(dy > maxFallSpeed) dy = maxFallSpeed;
+            return;
+        }
+        plummeting = false;
         if (playerX < x) {
             rushRight();
         } else if (playerX > x) {
             rushLeft();
         }
+
+
+
         if (!caughtIn4k()){
             state = EnemyState.PATROLLING;
         }
@@ -192,6 +206,11 @@ public class Burg extends Enemy{
     private void getNextPosition() {
 
         //I want a couple different cases of movement
+
+        if (y > tileMap.getHeight()-getHeight()/2) {
+            health = 0;
+            dead = true;
+        }
 
         switch (state) {
             case START:

@@ -45,10 +45,10 @@ public class Enemy extends MapObject {
 
 
 	public void update() {
+		}
 
 	}
-	
-}
+
 
 
 
