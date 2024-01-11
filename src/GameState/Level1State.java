@@ -66,7 +66,7 @@ public class Level1State extends GameState {
 		Point[] points = new Point[] {
 			new Point(1410, 150),
 				new Point(1500, 150),
-				new Point(1850, 120),
+				new Point(2050, 120),
 		};
 		for(int i = 0; i < points.length; i++) {
 			s = new Slugger(tileMap);
@@ -80,7 +80,7 @@ public class Level1State extends GameState {
 	//spawn trophy
 	private void spawnTrophy(){
 		trophy =new Trophy(tileMap);
-		trophy.setPosition(2970,105);
+		trophy.setPosition(2970,110);
 	}
 
 	private void spawnDumbbells(){
@@ -131,9 +131,7 @@ public class Level1State extends GameState {
 		if (trophy.intersects(player)){
 			bgMusic.stop();
 			//play a jingle here
-			WinningState l2 = new WinningState(gsm);
-			l2.init();
-			gsm.setState(GameStateManager.WINNINGSTATE);
+			gsm.setState(GameStateManager.LEVEL2STATE);
 			bg.update();
 			gsm.update();
 		}

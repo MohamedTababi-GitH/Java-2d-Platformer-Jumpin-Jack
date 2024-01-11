@@ -1,10 +1,12 @@
 package GameState;
 
-import Main.GamePanel;
-import TileMap.*;
-import Entity.*;
-import Entity.Enemies.*;
 import Audio.AudioPlayer;
+import Entity.*;
+import Entity.Enemies.Burg;
+import Entity.Enemies.Slugger;
+import Main.GamePanel;
+import TileMap.Background;
+import TileMap.TileMap;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -30,64 +32,57 @@ public class Level2State extends GameState {
 	public Level2State(GameStateManager gsm) {
 		this.gsm = gsm;
 	}
-
+	
 	public void init() {
-
+		
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/Tilesets/citytileset.png");
-		tileMap.loadMap("/Maps/level1-1.map");
+		tileMap.loadMap("/Maps/level1-2.map");
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(1);
-
+		
 		bg = new Background("/Backgrounds/nightcitybg.gif", 0.1);
-
+		
 		player = new Player(tileMap);
-		player.setPosition(100, 100);
-
+		player.setPosition(120, 60);
+		
 		populateEnemies();
 		spawnDumbbells();
 		spawnTrophy();
-
+		
 		explosions = new ArrayList<Explosion>();
-
+		
 		hud = new HUD(player);
-
-		bgMusic = new AudioPlayer("/Music/level1.mp3");
+		
+		bgMusic = new AudioPlayer("/Music/title.mp3");
 		bgMusic.play();
-
+		
 	}
-
+	
 	private void populateEnemies() {
-
+		
 		enemies = new ArrayList<Enemy>();
-
+		
 		Slugger s;
 		Burg b;
 		Point[] points = new Point[] {
-				new Point(200, 100),
-				new Point(860, 200),
-				new Point(1525, 200),
-				new Point(1680, 200),
-				new Point(1800, 200)
+			new Point(1410, 150),
+				new Point(1500, 150),
+				new Point(2050, 120),
 		};
 		for(int i = 0; i < points.length; i++) {
 			s = new Slugger(tileMap);
 			s.setPosition(points[i].x, points[i].y);
 			enemies.add(s);
 		}
-		for(int i = 0; i < points.length; i++) {
-			b = new Burg(tileMap);
-			b.setPosition(points[i].x, points[i].y);
-			enemies.add(b);
-		}
 
-
+		
 	}
 
 	//spawn trophy
 	private void spawnTrophy(){
 		trophy =new Trophy(tileMap);
-		trophy.setPosition(3100,200);
+		trophy.setPosition(2970,110);
 	}
 
 	private void spawnDumbbells(){
@@ -95,12 +90,9 @@ public class Level2State extends GameState {
 		Dumbbell d;
 
 		Point[] points = {
-				new Point(100,200),
-				new Point(200,100),
-				new Point(1000,200),
-				new Point(2000,200),
-				new Point(1500,100),
-				new Point(300,200)
+				new Point(630,60),
+				new Point(750,60),
+				new Point(1950,60),
 		};
 		for(int i = 0; i < points.length; i++) {
 			d = new Dumbbell(tileMap);
@@ -126,13 +118,13 @@ public class Level2State extends GameState {
 		// update player
 		player.update();
 		tileMap.setPosition(
-				GamePanel.WIDTH / 2 - player.getx(),
-				GamePanel.HEIGHT / 2 - player.gety()
+			GamePanel.WIDTH / 2 - player.getx(),
+			GamePanel.HEIGHT / 2 - player.gety()
 		);
-
+		
 		// set background
 		bg.setPosition(tileMap.getx(), tileMap.gety());
-
+		
 		// attack enemies
 		player.checkAttack(enemies);
 		score += player.checkDumbbells(dumbbells) * 10;
@@ -141,15 +133,13 @@ public class Level2State extends GameState {
 		if (trophy.intersects(player)){
 			bgMusic.stop();
 			//play a jingle here
-			WinningState l2 = new WinningState(gsm);
-			l2.init();
 			gsm.setState(GameStateManager.WINNINGSTATE);
 			bg.update();
 			gsm.update();
 		}
 
 
-
+		
 		// update all enemies
 		for(int i = 0; i < enemies.size(); i++) {
 			Enemy e = enemies.get(i);
@@ -158,11 +148,11 @@ public class Level2State extends GameState {
 				enemies.remove(i);
 				i--;
 				explosions.add(
-						new Explosion(e.getx(), e.gety()));
+					new Explosion(e.getx(), e.gety()));
 				score += 50;
 			}
 		}
-
+		
 		// update explosions
 		for(int i = 0; i < explosions.size(); i++) {
 			explosions.get(i).update();
@@ -174,22 +164,22 @@ public class Level2State extends GameState {
 		//update player score
 		player.setScore(player.getScore() + score);
 	}
-
+	
 	public void draw(Graphics2D g) {
 
 		// draw bg
 		bg.draw(g);
-
+		
 		// draw tilemap
 		tileMap.draw(g);
-
+		
 		// draw player
 		player.draw(g);
 
 		//draw trophy
 		trophy.draw(g);
 
-
+		
 		// draw enemies
 		for(int i = 0; i < enemies.size(); i++) {
 			enemies.get(i).draw(g);
@@ -199,19 +189,19 @@ public class Level2State extends GameState {
 		for(int i = 0; i < dumbbells.size(); i++) {
 			dumbbells.get(i).draw(g);
 		}
-
+		
 		// draw explosions
 		for(int i = 0; i < explosions.size(); i++) {
 			explosions.get(i).setMapPosition(
-					(int)tileMap.getx(), (int)tileMap.gety());
+				(int)tileMap.getx(), (int)tileMap.gety());
 			explosions.get(i).draw(g);
 		}
 
 		// draw hud
 		hud.draw(g);
-
+		
 	}
-
+	
 	public void keyPressed(int k) {
 		if(k == KeyEvent.VK_A) player.setLeft(true);
 		if(k == KeyEvent.VK_D) player.setRight(true);
@@ -222,7 +212,7 @@ public class Level2State extends GameState {
 		if(k == KeyEvent.VK_R) player.setScratching();
 		if(k == KeyEvent.VK_F) player.setFiring();
 	}
-
+	
 	public void keyReleased(int k) {
 		if(k == KeyEvent.VK_A) player.setLeft(false);
 		if(k == KeyEvent.VK_D) player.setRight(false);
@@ -231,7 +221,7 @@ public class Level2State extends GameState {
 		if(k == KeyEvent.VK_W) player.setJumping(false);
 		if(k == KeyEvent.VK_E) player.setGliding(false);
 	}
-
+	
 }
 
 
