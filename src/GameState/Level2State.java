@@ -6,6 +6,7 @@ import Entity.*;
 import Entity.Enemies.*;
 import Audio.AudioPlayer;
 
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class Level2State extends GameState {
 		hud = new HUD(player);
 
 		bgMusic = new AudioPlayer("/Music/level1.mp3");
-		bgMusic.play();
+		bgMusic.clip.loop(Clip.LOOP_CONTINUOUSLY);
 
 	}
 

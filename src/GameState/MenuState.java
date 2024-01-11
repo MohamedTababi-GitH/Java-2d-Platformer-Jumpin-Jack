@@ -3,6 +3,7 @@ package GameState;
 import Audio.AudioPlayer;
 import TileMap.Background;
 
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
@@ -29,7 +30,7 @@ public class MenuState extends GameState {
 		
 		try {
 			music = new AudioPlayer("/Music/title.mp3");
-			music.play();
+			music.clip.loop(Clip.LOOP_CONTINUOUSLY);
 			bg = new Background("/Backgrounds/pinkcitybg.gif", 1);
 			bg.setVector(0.7, 0);
 			

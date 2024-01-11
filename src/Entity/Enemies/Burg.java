@@ -176,7 +176,6 @@ public class Burg extends Enemy{
     }
 
     private void lowHealth() {
-        System.out.println("AA!!!!");
         if (playerX < x) {
             moveRight();
         } else if (playerX > x) {

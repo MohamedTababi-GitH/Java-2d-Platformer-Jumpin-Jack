@@ -20,8 +20,8 @@ public class GameOverState extends GameState {
         try {
             jingle = new AudioPlayer("/SFX/death.mp3");
             jingle.play();
-            titleColor = new Color(128, 0, 0);
-            titleFont = new Font("Century Gothic", Font.PLAIN, 28);
+            titleColor = Color.RED;
+            titleFont = new Font("Century Gothic", Font.PLAIN, 18);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -39,17 +39,33 @@ public class GameOverState extends GameState {
 
     @Override
     public void draw(Graphics2D g) {
+        String output = "Game Over!";
         // Drawing logic for the game over screen
-        g.setColor(titleColor);
+        g.setColor(Color.BLACK);
         g.setFont(titleFont);
-        g.drawString("Game Over", 80, 70);
+        g.drawString(output, 99, 70);
+        g.drawString(output, 101, 70);
+        g.drawString(output, 100, 69);
+        g.drawString(output, 100, 71);
+        g.setColor(titleColor);
+        g.drawString(output, 100, 70);
         // Add more text or graphics for the game over screen
+        // Drawing logic for the game over screen
+        output = "Press Spacebar to restart!";
+        g.setColor(Color.BLACK);
+        g.setFont(titleFont);
+        g.drawString(output, 49, 170);
+        g.drawString(output, 51, 170);
+        g.drawString(output, 50, 169);
+        g.drawString(output, 50, 171);
+        g.setColor(titleColor);
+        g.drawString(output, 50, 170);
     }
 
     @Override
     public void keyPressed(int k) {
         // Handle key presses in the game over screen
-        if (k == KeyEvent.VK_ENTER) {
+        if (k == KeyEvent.VK_SPACE) {
             // Restart the game or go back to the main menu
             gsm.setState(GameStateManager.MENUSTATE); // Change to the appropriate state
         }
