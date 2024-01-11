@@ -291,7 +291,10 @@ public class Player extends MapObject {
 			if(dy < 0 && !jumping) dy += stopJumpSpeed;
 			
 			if(dy > maxFallSpeed) dy = maxFallSpeed;
-			
+
+			//Implement Auto jump attack when Falling directly on enemy
+
+
 		}
 		
 	}
