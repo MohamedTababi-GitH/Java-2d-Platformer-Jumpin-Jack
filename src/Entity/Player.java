@@ -364,9 +364,9 @@ public class Player extends MapObject {
 			if(currentAction != SCRATCHING) {
 				sfx.get("scratch").play();
 				currentAction = SCRATCHING;
-				animation.setFrames(sprites.get(SCRATCHING));
-				animation.setDelay(50);
-				width = 60;
+				animation.setFrames(sprites.get(FIREBALL));
+				animation.setDelay(100);
+				width = 30;
 			}
 		}
 		else if(firing) {

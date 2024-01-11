@@ -35,14 +35,14 @@ public class Level1State extends GameState {
 		
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/Tilesets/citytileset.png");
-		tileMap.loadMap("/Maps/level1-1.map");
+		tileMap.loadMap("/Maps/Tutorial.map");
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(1);
 		
-		bg = new Background("/Backgrounds/pinkcitybg.gif", 0.1);
+		bg = new Background("/Backgrounds/nightcitybg.gif", 0.1);
 		
 		player = new Player(tileMap);
-		player.setPosition(100, 100);
+		player.setPosition(120, 60);
 		
 		populateEnemies();
 		spawnDumbbells();
@@ -64,21 +64,14 @@ public class Level1State extends GameState {
 		Slugger s;
 		Burg b;
 		Point[] points = new Point[] {
-			new Point(200, 100),
-			new Point(860, 200),
-			new Point(1525, 200),
-			new Point(1680, 200),
-			new Point(1800, 200)
+			new Point(1410, 150),
+				new Point(1500, 150),
+				new Point(1850, 120),
 		};
 		for(int i = 0; i < points.length; i++) {
 			s = new Slugger(tileMap);
 			s.setPosition(points[i].x, points[i].y);
 			enemies.add(s);
-		}
-		for(int i = 0; i < points.length; i++) {
-			b = new Burg(tileMap);
-			b.setPosition(points[i].x, points[i].y);
-			enemies.add(b);
 		}
 
 		
@@ -87,7 +80,7 @@ public class Level1State extends GameState {
 	//spawn trophy
 	private void spawnTrophy(){
 		trophy =new Trophy(tileMap);
-		trophy.setPosition(3100,200);
+		trophy.setPosition(2970,105);
 	}
 
 	private void spawnDumbbells(){
@@ -95,12 +88,9 @@ public class Level1State extends GameState {
 		Dumbbell d;
 
 		Point[] points = {
-				new Point(100,200),
-				new Point(200,100),
-				new Point(1000,200),
-				new Point(2000,200),
-				new Point(1500,100),
-				new Point(300,200)
+				new Point(630,60),
+				new Point(750,60),
+				new Point(1950,60),
 		};
 		for(int i = 0; i < points.length; i++) {
 			d = new Dumbbell(tileMap);
