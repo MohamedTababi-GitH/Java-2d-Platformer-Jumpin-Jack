@@ -5,7 +5,7 @@ import TileMap.TileMap;
 
 import java.awt.image.BufferedImage;
 import java.awt.Graphics2D;
-
+import java.lang.Math;
 import javax.imageio.ImageIO;
 
 public class Burg extends Enemy{
@@ -118,8 +118,8 @@ public class Burg extends Enemy{
         }
     }
 
-    private boolean caughtIn4k(){
-        if((x - playerX) <= 70 && (playerX - x) <= 70 &&
+    private boolean caughtIn4k(int range){
+        if((x - playerX) <= range && (playerX - x) <= range &&
                 (y - playerY) <= 30 && (playerY - y) <= 50){
             return true;
         }
@@ -155,10 +155,10 @@ public class Burg extends Enemy{
         lastX = x;
         lastY = y;
 
-        if(health == 1 && caughtIn4k()){
+        if(health == 1 && caughtIn4k(70)){
             state = EnemyState.LOW_HEALTH;
         }
-        if(caughtIn4k()){
+        if(caughtIn4k(70)){
             state = EnemyState.ALERT;
         }
     }
@@ -174,10 +174,10 @@ public class Burg extends Enemy{
         } else if (playerX > x) {
             rushRight();
         }
-        if(health == 1 && caughtIn4k()){
+        if(health == 1){
             state = EnemyState.LOW_HEALTH;
         }
-        if (!caughtIn4k()){
+        if (!caughtIn4k(90)){
             state = EnemyState.PATROLLING;
         }
 
@@ -197,7 +197,7 @@ public class Burg extends Enemy{
 
 
 
-        if (!caughtIn4k()){
+        if (!caughtIn4k(150)){
             state = EnemyState.PATROLLING;
         }
     }
