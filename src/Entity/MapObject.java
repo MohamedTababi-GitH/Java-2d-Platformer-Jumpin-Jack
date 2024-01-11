@@ -55,7 +55,9 @@ public abstract class MapObject {
 	protected boolean falling;
 	
 	// movement attributes
-	protected double moveSpeed;
+
+	// Caesar changed this to static
+	protected static double moveSpeed;
 	protected double maxSpeed;
 	protected double stopSpeed;
 	protected double fallSpeed;

@@ -19,6 +19,9 @@ public class Level1State extends GameState {
 	private Player player;
 	
 	private ArrayList<Enemy> enemies;
+
+	// Caesar
+	ArrayList<Juice> juices;
 	ArrayList<Dumbbell> dumbbells;
 	private ArrayList<Explosion> explosions;
 	
@@ -45,7 +48,8 @@ public class Level1State extends GameState {
 		player.setPosition(100, 100);
 		
 		populateEnemies();
-		spawnDumbbells();
+		//spawnDumbbells();
+		spawnJuice();
 		spawnTrophy();
 		
 		explosions = new ArrayList<Explosion>();
@@ -90,6 +94,7 @@ public class Level1State extends GameState {
 		trophy.setPosition(3100,200);
 	}
 
+	/*
 	private void spawnDumbbells(){
 		dumbbells = new ArrayList<Dumbbell>();
 		Dumbbell d;
@@ -106,6 +111,28 @@ public class Level1State extends GameState {
 			d = new Dumbbell(tileMap);
 			d.setPosition(points[i].x, points[i].y);
 			dumbbells.add(d);
+		}
+	}
+
+	*/
+
+// Caesar code
+	private void spawnJuice(){
+		juices = new ArrayList<Juice>();
+		Juice j;
+
+		Point[] points = {
+				new Point(100,250),
+				new Point(200,100),
+				new Point(1000,200),
+				new Point(2000,200),
+				new Point(1500,100),
+				new Point(300,200)
+		};
+		for(int i = 0; i < points.length; i++) {
+			j = new Juice(tileMap);
+			j.setPosition(points[i].x, points[i].y);
+			juices.add(j);
 		}
 	}
 

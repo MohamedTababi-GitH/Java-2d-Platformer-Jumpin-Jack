@@ -457,7 +457,13 @@ public class Player extends MapObject {
 	public void setScore(int score) {
 		this.score = score;
 	}
+
+	// Code Caesar added
+	public static double playerSpeed(){
+		return moveSpeed;
+	}
 }
+
 
 
 
