@@ -223,6 +223,25 @@ public class Player extends MapObject {
 		}
 		return dumbAmt;
 	}
+
+	// Caesar code
+	public void checkJuice(ArrayList<Juice> juices){
+
+		for(int i = 0; i < juices.size(); i++) {
+			Juice j = juices.get(i);
+			if (intersects(j)) {
+				sfx.get("jump").play();
+				if (moveSpeed < maxSpeed)
+					moveSpeed+=1;
+				j.setHit();
+				j.update();
+				juices.remove(j);
+				System.out.println(moveSpeed);
+			}
+		}
+
+	}
+
 	public void hit(int damage) {
 		if(flinching) return;
 		health -= damage;
