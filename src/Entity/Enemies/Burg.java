@@ -14,8 +14,6 @@ public class Burg extends Enemy{
     private EnemyState state;
     private int startcounter = 0;
 
-    boolean plummeting = false;
-
     private BufferedImage[] sprites;
 
     public Burg(TileMap tm) {
@@ -34,7 +32,7 @@ public class Burg extends Enemy{
         cwidth = 20;
         cheight = 20;
 
-        health = maxHealth = 1;
+        health = maxHealth = 5;
         damage = 1;
 
 
@@ -166,6 +164,11 @@ public class Burg extends Enemy{
     }
 
     private void alert() {
+        if(!bottomLeft && !bottomRight){
+            dy += fallSpeed;
+            if(dy > maxFallSpeed) dy = maxFallSpeed;
+            return;
+        }
         if (playerX < x) {
             rushLeft();
         } else if (playerX > x) {
@@ -182,12 +185,10 @@ public class Burg extends Enemy{
 
     private void lowHealth() {
         if(!bottomLeft && !bottomRight){
-            plummeting = true;
             dy += fallSpeed;
             if(dy > maxFallSpeed) dy = maxFallSpeed;
             return;
         }
-        plummeting = false;
         if (playerX < x) {
             rushRight();
         } else if (playerX > x) {
@@ -208,6 +209,7 @@ public class Burg extends Enemy{
         //I want a couple different cases of movement
 
         if (y > tileMap.getHeight()-getHeight()/2) {
+            awardsPoints = false;
             health = 0;
             dead = true;
         }

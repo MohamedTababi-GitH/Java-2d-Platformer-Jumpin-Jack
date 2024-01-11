@@ -149,7 +149,9 @@ public class Level1State extends GameState {
 				i--;
 				explosions.add(
 					new Explosion(e.getx(), e.gety()));
-				score += 50;
+				if(e.awardsPoints) {
+					score += 50;
+				}
 			}
 		}
 		
