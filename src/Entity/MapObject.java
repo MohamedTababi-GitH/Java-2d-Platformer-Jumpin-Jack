@@ -15,10 +15,10 @@ public abstract class MapObject {
 	protected double ymap;
 	
 	// position and vector
-	protected double x;
-	protected double y;
-	protected double dx;
-	protected double dy;
+	public double x;
+	public double y;
+	public double dx;
+	public double dy;
 	
 	// dimensions
 	protected int width;
@@ -35,6 +35,8 @@ public abstract class MapObject {
 	protected double ydest;
 	protected double xtemp;
 	protected double ytemp;
+	protected double lastX;
+	protected double lastY;
 	protected boolean topLeft;
 	protected boolean topRight;
 	protected boolean bottomLeft;
