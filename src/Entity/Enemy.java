@@ -1,10 +1,10 @@
 package Entity;
 
+import Audio.AudioPlayer;
 import Entity.Enemies.EnemyState;
 import TileMap.TileMap;
 
 public class Enemy extends MapObject {
-	
 	protected int health;
 	protected int maxHealth;
 	protected boolean dead;

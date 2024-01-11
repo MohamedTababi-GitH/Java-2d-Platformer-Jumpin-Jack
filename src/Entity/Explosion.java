@@ -1,5 +1,7 @@
 package Entity;
 
+import Audio.AudioPlayer;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
@@ -16,7 +18,7 @@ public class Explosion {
 	
 	private Animation animation;
 	private BufferedImage[] sprites;
-	
+	private static final AudioPlayer boom = new AudioPlayer("/SFX/explosion-47163.mp3");
 	private boolean remove;
 	
 	public Explosion(int x, int y) {
@@ -49,7 +51,7 @@ public class Explosion {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		
+		boom.play();
 		animation = new Animation();
 		animation.setFrames(sprites);
 		animation.setDelay(70);

@@ -178,9 +178,9 @@ public class Burg extends Enemy{
 
     private void lowHealth() {
         if (playerX < x) {
-            moveRight();
+            rushRight();
         } else if (playerX > x) {
-            moveLeft();
+            rushLeft();
         }
         if (!caughtIn4k()){
             state = EnemyState.PATROLLING;

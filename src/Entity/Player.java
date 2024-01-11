@@ -136,8 +136,10 @@ public class Player extends MapObject {
 		animation.setDelay(400);
 		
 		sfx = new HashMap<String, AudioPlayer>();
-		sfx.put("jump", new AudioPlayer("/SFX/jump.mp3"));
-		sfx.put("scratch", new AudioPlayer("/SFX/scratch.mp3"));
+		sfx.put("jump", new AudioPlayer("/SFX/toy-button-105724.mp3"));
+		sfx.put("scratch", new AudioPlayer("/SFX/fast-simple-chop-5-6270.mp3"));
+		sfx.put("hit", new AudioPlayer("/SFX/fist-punch-or-kick-7171.mp3"));
+		sfx.put("get", new AudioPlayer("/SFX/coin-collect-retro-8-bit-sound-effect-145251.mp3"));
 		
 	}
 	
@@ -172,6 +174,7 @@ public class Player extends MapObject {
 						e.gety() > y - height / 2 &&
 						e.gety() < y + height / 2
 					) {
+						sfx.get("hit").play();
 						e.hit(scratchDamage);
 					}
 				}
@@ -182,6 +185,7 @@ public class Player extends MapObject {
 						e.gety() > y - height / 2 &&
 						e.gety() < y + height / 2
 					) {
+						sfx.get("hit").play();
 						e.hit(scratchDamage);
 					}
 				}
@@ -212,7 +216,7 @@ public class Player extends MapObject {
 		for(int i = 0; i < dumbbells.size(); i++) {
 			Dumbbell d = dumbbells.get(i);
 			if (intersects(d)) {
-				sfx.get("jump").play();
+				sfx.get("get").play();
 				if (health < maxHealth)
 					health+=1;
 				d.setHit();
