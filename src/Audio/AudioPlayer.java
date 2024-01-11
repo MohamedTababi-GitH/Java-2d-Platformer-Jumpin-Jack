@@ -5,6 +5,7 @@ import javax.sound.sampled.*;
 public class AudioPlayer {
 	
 	public Clip clip;
+
 	
 	public AudioPlayer(String s) {
 		
@@ -39,8 +40,9 @@ public class AudioPlayer {
 	}
 	
 	public void play() {
+
 		if(clip == null) return;
-		stop();
+		clip.stop();
 		clip.setFramePosition(0);
 		clip.start();
 	}
