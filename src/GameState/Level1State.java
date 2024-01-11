@@ -122,9 +122,11 @@ public class Level1State extends GameState {
 		Juice j;
 
 		Point[] points = {
-				new Point(150,300),
-				new Point(250,150),
-				new Point(900,700),
+				new Point(150,150),
+				new Point(200,200),
+				new Point(250,200),
+				new Point(300,200),
+
 				/*
 				new Point(2000,200),
 				new Point(1500,100),
@@ -169,6 +171,9 @@ public class Level1State extends GameState {
 		// attack enemies
 		player.checkAttack(enemies);
 		score += player.checkDumbbells(dumbbells) * 10;
+
+		// Caesar
+		player.checkJuice(juices);
 
 		//special trophy collision check
 		if (trophy.intersects(player)){

@@ -231,12 +231,14 @@ public class Player extends MapObject {
 			Juice j = juices.get(i);
 			if (intersects(j)) {
 				sfx.get("jump").play();
-				if (moveSpeed < maxSpeed)
+				if (moveSpeed < maxSpeed) {
 					moveSpeed+=1;
+					System.out.println("move is speed is juiced!!: " + moveSpeed);
+				} else
+					System.out.println("can't chug more!!!");
 				j.setHit();
 				j.update();
 				juices.remove(j);
-				System.out.println(moveSpeed);
 			}
 		}
 
