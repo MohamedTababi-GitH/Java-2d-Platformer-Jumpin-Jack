@@ -46,7 +46,7 @@ public class Burg extends Enemy{
                     )
             );
 
-            sprites = new BufferedImage[1];
+            sprites = new BufferedImage[2];
             for(int i = 0; i < sprites.length; i++) {
                 sprites[i] = spritesheet.getSubimage(
                         i * width,
@@ -117,7 +117,8 @@ public class Burg extends Enemy{
     }
 
     private boolean caughtIn4k(){
-        if((x - playerX) <= 55 && (playerX - x) <= 55) {
+        if((x - playerX) <= 70 && (playerX - x) <= 70 &&
+                (y - playerY) <= 30 && (playerY - y) <= 50){
             return true;
         }
         return false;
