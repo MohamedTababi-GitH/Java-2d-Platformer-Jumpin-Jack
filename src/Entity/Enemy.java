@@ -1,5 +1,6 @@
 package Entity;
 
+import Entity.Enemies.EnemyState;
 import TileMap.TileMap;
 
 public class Enemy extends MapObject {
@@ -8,7 +9,8 @@ public class Enemy extends MapObject {
 	protected int maxHealth;
 	protected boolean dead;
 	protected int damage;
-	
+
+
 	protected boolean flinching;
 	protected long flinchTimer;
 	
@@ -28,8 +30,16 @@ public class Enemy extends MapObject {
 		flinching = true;
 		flinchTimer = System.nanoTime();
 	}
-	
-	public void update() {}
+
+	protected void newState(int enemyState){
+
+
+	}
+
+
+	public void update() {
+
+	}
 	
 }
 

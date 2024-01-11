@@ -10,11 +10,16 @@ import javax.imageio.ImageIO;
 
 public class Burg extends Enemy{
 
+    //need enemy state for burg, slug will stay dumb
+    private EnemyState state;
+
     private BufferedImage[] sprites;
 
     public Burg(TileMap tm) {
 
         super(tm);
+        //it should start out as patrolling
+        state = EnemyState.PATROLLING;
 
         moveSpeed = 0.5;
         maxSpeed = 0.5;
@@ -28,6 +33,8 @@ public class Burg extends Enemy{
 
         health = maxHealth = 4;
         damage = 1;
+
+
 
         // load sprites
         try {
@@ -62,9 +69,94 @@ public class Burg extends Enemy{
 
     }
 
+    private void moveLeft() {
+        left = true;
+        right = false;
+        facingRight = false;
+        if (!falling) {
+            dx = -moveSpeed;
+        }
+    }
+
+    private void moveRight() {
+        left = false;
+        right = true;
+        facingRight = true;
+        if (!falling) {
+            dx = moveSpeed;
+        }
+    }
+
+
+    private void patrolling() {
+        // default movement
+        if(left) {
+            dx -= moveSpeed;
+            if(dx < -maxSpeed) {
+                dx = -maxSpeed;
+            }
+        }
+        else if(right) {
+            dx += moveSpeed;
+            if(dx > maxSpeed) {
+                dx = maxSpeed;
+            }
+        }
+
+        // falling
+        if(falling) {
+            dy += fallSpeed;
+
+
+
+
+
+        }
+    }
+
+    /*
+    private void alert() {
+        double playerX = player.getx();
+        double playerY = player.gety();
+
+        if (playerX < x) {
+            moveLeft();
+        } else if (playerX > x) {
+            moveRight();
+        }
+    }
+*/
+
+    private void lowHealth() {
+
+    }
+
+
+
     private void getNextPosition() {
 
-        // movement
+        //I want a couple different cases of movement
+
+        switch (state) {
+            case PATROLLING:
+                patrolling();
+                break;
+            case ALERT:
+                /*
+                alert();
+                */
+                break;
+
+
+            case LOW_HEALTH:
+                lowHealth();
+                break;
+            // Add more states as needed
+        }
+
+
+/*
+        // default movement
         if(left) {
             dx -= moveSpeed;
             if(dx < -maxSpeed) {
@@ -82,6 +174,13 @@ public class Burg extends Enemy{
         if(falling) {
             dy += fallSpeed;
         }
+*/
+        //player spotted
+
+        //write code
+
+
+
 
     }
 
@@ -112,6 +211,8 @@ public class Burg extends Enemy{
             left = false;
             facingRight = true;
         }
+
+
 
         // update animation
         animation.update();
