@@ -12,6 +12,7 @@ public class Burg extends Enemy{
 
     //need enemy state for burg, slug will stay dumb
     private EnemyState state;
+    private int startcounter = 0;
 
     private BufferedImage[] sprites;
 
@@ -19,7 +20,7 @@ public class Burg extends Enemy{
 
         super(tm);
         //it should start out as patrolling
-        state = EnemyState.PATROLLING;
+        state = EnemyState.START;
 
         moveSpeed = 0.5;
         maxSpeed = 0.5;
@@ -31,7 +32,7 @@ public class Burg extends Enemy{
         cwidth = 20;
         cheight = 20;
 
-        health = maxHealth = 4;
+        health = maxHealth = 5;
         damage = 1;
 
 
@@ -45,7 +46,7 @@ public class Burg extends Enemy{
                     )
             );
 
-            sprites = new BufferedImage[3];
+            sprites = new BufferedImage[1];
             for(int i = 0; i < sprites.length; i++) {
                 sprites[i] = spritesheet.getSubimage(
                         i * width,
@@ -87,7 +88,40 @@ public class Burg extends Enemy{
         }
     }
 
+    private void rushLeft() {
+        left = true;
+        right = false;
+        facingRight = false;
+        if (!falling) {
+            dx = -moveSpeed * 2.5;
+        }
+    }
 
+    private void rushRight() {
+        left = false;
+        right = true;
+        facingRight = true;
+        if (!falling) {
+            dx = moveSpeed * 2.5;
+        }
+    }
+
+    private void start(){
+            dy += fallSpeed;
+            if(dy > maxFallSpeed) dy = maxFallSpeed;
+        startcounter++;
+
+        if(startcounter > 100){
+            state = EnemyState.PATROLLING;
+        }
+    }
+
+    private boolean caughtIn4k(){
+        if((x - playerX) <= 55 && (playerX - x) <= 55) {
+            return true;
+        }
+        return false;
+    }
     private void patrolling() {
         // default movement
         if(left) {
@@ -103,32 +137,54 @@ public class Burg extends Enemy{
             }
         }
 
-        // falling
-        if(falling) {
-            dy += fallSpeed;
+        // to not fall
+        if(!bottomLeft) {
+                y = lastY;
+                x = lastX + 1;
+                moveRight();
+            }
+            else if (!bottomRight){
+                y = lastY;
+                x = lastX - 1;
+                moveLeft();
+            }
+            falling = false;
+        lastX = x;
+        lastY = y;
 
-
-
-
-
+        if(health == 1){
+            state = EnemyState.LOW_HEALTH;
+        }
+        if(caughtIn4k()){
+            state = EnemyState.ALERT;
         }
     }
 
-    /*
     private void alert() {
-        double playerX = player.getx();
-        double playerY = player.gety();
-
         if (playerX < x) {
-            moveLeft();
+            rushLeft();
         } else if (playerX > x) {
-            moveRight();
+            rushRight();
         }
+        if(health == 1){
+            state = EnemyState.LOW_HEALTH;
+        }
+        if (!caughtIn4k()){
+            state = EnemyState.PATROLLING;
+        }
+
     }
-*/
 
     private void lowHealth() {
-
+        System.out.println("AA!!!!");
+        if (playerX < x) {
+            moveRight();
+        } else if (playerX > x) {
+            moveLeft();
+        }
+        if (!caughtIn4k()){
+            state = EnemyState.PATROLLING;
+        }
     }
 
 
@@ -138,16 +194,15 @@ public class Burg extends Enemy{
         //I want a couple different cases of movement
 
         switch (state) {
+            case START:
+                start();
+                break;
             case PATROLLING:
                 patrolling();
                 break;
             case ALERT:
-                /*
                 alert();
-                */
                 break;
-
-
             case LOW_HEALTH:
                 lowHealth();
                 break;

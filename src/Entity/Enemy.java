@@ -10,6 +10,8 @@ public class Enemy extends MapObject {
 	protected boolean dead;
 	protected int damage;
 
+	protected int playerX;
+	protected int playerY;
 
 	protected boolean flinching;
 	protected long flinchTimer;
@@ -29,6 +31,11 @@ public class Enemy extends MapObject {
 		if(health == 0) dead = true;
 		flinching = true;
 		flinchTimer = System.nanoTime();
+	}
+
+	public void getPlayerLocation(int x, int y){
+		playerX = x;
+		playerY = y;
 	}
 
 	protected void newState(int enemyState){

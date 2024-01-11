@@ -35,6 +35,8 @@ public abstract class MapObject {
 	protected double ydest;
 	protected double xtemp;
 	protected double ytemp;
+	protected double lastX;
+	protected double lastY;
 	protected boolean topLeft;
 	protected boolean topRight;
 	protected boolean bottomLeft;

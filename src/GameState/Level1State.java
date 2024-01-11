@@ -70,11 +70,6 @@ public class Level1State extends GameState {
 			new Point(1800, 200)
 		};
 		for(int i = 0; i < points.length; i++) {
-			s = new Slugger(tileMap);
-			s.setPosition(points[i].x, points[i].y);
-			enemies.add(s);
-		}
-		for(int i = 0; i < points.length; i++) {
 			b = new Burg(tileMap);
 			b.setPosition(points[i].x, points[i].y);
 			enemies.add(b);
@@ -150,6 +145,7 @@ public class Level1State extends GameState {
 		// update all enemies
 		for(int i = 0; i < enemies.size(); i++) {
 			Enemy e = enemies.get(i);
+			e.getPlayerLocation(player.getx(), player.gety());
 			e.update();
 			if(e.isDead()) {
 				enemies.remove(i);
