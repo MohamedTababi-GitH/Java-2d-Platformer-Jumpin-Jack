@@ -39,7 +39,7 @@ public class Level2State extends GameState {
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(1);
 
-		bg = new Background("/Backgrounds/nightcitybg.gif", 0.1);
+		bg = new Background("/Backgrounds/pinkcitybg.gif", 0.1);
 
 		player = new Player(tileMap);
 		player.setPosition(30, 90);
@@ -52,7 +52,7 @@ public class Level2State extends GameState {
 
 		hud = new HUD(player);
 
-		bgMusic = new AudioPlayer("/Music/title.mp3");
+		bgMusic = new AudioPlayer("/Music/level1.mp3");
 		bgMusic.play();
 
 	}
@@ -206,9 +206,9 @@ public class Level2State extends GameState {
 		if(k == KeyEvent.VK_W) player.setUp(true);
 		if(k == KeyEvent.VK_S) player.setDown(true);
 		if(k == KeyEvent.VK_SPACE) player.setJumping(true);
-		if(k == KeyEvent.VK_E) player.setGliding(true);
-		if(k == KeyEvent.VK_R) player.setScratching();
-		if(k == KeyEvent.VK_F) player.setFiring();
+		//if(k == KeyEvent.VK_E) player.setGliding(true);
+		if(k == KeyEvent.VK_L) player.setScratching();
+		//if(k == KeyEvent.VK_F) player.setFiring();
 	}
 
 	public void keyReleased(int k) {
@@ -216,9 +216,10 @@ public class Level2State extends GameState {
 		if(k == KeyEvent.VK_D) player.setRight(false);
 		if(k == KeyEvent.VK_W) player.setUp(false);
 		if(k == KeyEvent.VK_S) player.setDown(false);
-		if(k == KeyEvent.VK_W) player.setJumping(false);
-		if(k == KeyEvent.VK_E) player.setGliding(false);
+		if(k == KeyEvent.VK_SPACE) player.setJumping(false);
+		//if(k == KeyEvent.VK_E) player.setGliding(false);
 	}
+
 
 }
 
