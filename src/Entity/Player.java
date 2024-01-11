@@ -233,7 +233,7 @@ public class Player extends MapObject {
 				sfx.get("jump").play();
 				if (moveSpeed < maxSpeed) {
 					moveSpeed+=1;
-					System.out.println("move is speed is juiced!!: " + moveSpeed);
+					System.out.println("move speed is juiced!!: " + moveSpeed);
 				} else
 					System.out.println("can't chug more!!!");
 				j.setHit();
