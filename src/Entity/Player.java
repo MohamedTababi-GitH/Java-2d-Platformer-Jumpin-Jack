@@ -226,20 +226,18 @@ public class Player extends MapObject {
 
 	// Caesar code
 	public void checkJuice(ArrayList<Juice> juices){
-		double initialSpeed = moveSpeed;
+		double initialSpeed = 0.6;
 		for(int i = 0; i < juices.size(); i++) {
 			Juice j = juices.get(i);
 			if (intersects(j)) {
 				sfx.get("jump").play();
 				if (moveSpeed < maxSpeed) {
 					moveSpeed+=1;
-					System.out.println("move speed is juiced!!: " + moveSpeed);
 					new java.util.Timer().schedule(
 						new java.util.TimerTask() {
 							@Override
 							public void run() {
 							moveSpeed = initialSpeed;
-								System.out.println("move speed juice expired :(  :" + moveSpeed);
 							}
 						},
 						5000 // 5 seconds in milliseconds
