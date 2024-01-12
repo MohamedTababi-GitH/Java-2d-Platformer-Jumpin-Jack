@@ -121,7 +121,6 @@ public class Level1State extends GameState {
 		Point[] points = {
 				new Point(630,60),
 				new Point(750,60),
-				new Point(1950,60),
 		};
 		for(int i = 0; i < points.length; i++) {
 			d = new Dumbbell(tileMap);
@@ -138,17 +137,7 @@ public class Level1State extends GameState {
 		Juice j;
 
 		Point[] points = {
-				new Point(150,150),
-				new Point(200,200),
-				new Point(250,200),
-				new Point(300,200),
-
-				/*
-				new Point(2000,200),
-				new Point(1500,100),
-				new Point(300,200)
-
-				 */
+				new Point(1920,60)
 		};
 		for(int i = 0; i < points.length; i++) {
 			j = new Juice(tileMap);
@@ -253,7 +242,6 @@ public class Level1State extends GameState {
 	}
 	
 	public void draw(Graphics2D g) {
-
 		// draw bg
 		bg.draw(g);
 		
@@ -289,7 +277,22 @@ public class Level1State extends GameState {
 		}
 
 		// draw hud
+		if (player.getx() > 60 && player.getx() < 150)
+			g.drawString("Use A and D to move around!",30,150);
+		if (player.getx() > 450 && player.getx() < 570)
+			g.drawString("Use Spacebar to jump!",30,90);
+		if (player.getx() > 600 && player.getx() < 810)
+			g.drawString("Dumbbells make you stronger!",40,210);
+		if (player.getx() > 600 && player.getx() < 810)
+			g.drawString("Dumbbells make you stronger!",40,210);
+		if (player.getx() > 1350 && player.getx() < 1650)
+			g.drawString("Use L to fight!",100,210);
+		if (player.getx() > 1770 && player.getx() < 1890) {
+			g.drawString("\"The Juice\" will make you faster", 20, 210);
+			g.drawString("for a short time!", 100, 220);
+		}
 		hud.draw(g);
+
 		
 	}
 	
