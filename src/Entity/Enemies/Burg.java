@@ -208,7 +208,7 @@ public class Burg extends Enemy{
 
         //I want a couple different cases of movement
 
-        if (y > tileMap.getHeight()-getHeight()/2) {
+        if (y > tileMap.getHeight()-getHeight()/2-10) {
             awardsPoints = false;
             health = 0;
             dead = true;

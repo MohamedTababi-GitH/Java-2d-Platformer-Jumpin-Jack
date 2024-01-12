@@ -55,7 +55,7 @@ public class Player extends MapObject {
 	
 	private HashMap<String, AudioPlayer> sfx;
 	
-	public Player(TileMap tm) {
+	public Player(TileMap tm, int phealth) {
 		
 		super(tm);
 		
@@ -75,7 +75,8 @@ public class Player extends MapObject {
 		facingRight = true;
 
 		
-		health = maxHealth = 5;
+		health = phealth;
+		maxHealth = 5;
 		fire = maxFire = 500;
 		
 		fireCost = 100;
@@ -142,7 +143,8 @@ public class Player extends MapObject {
 		sfx.put("get", new AudioPlayer("/SFX/coin-collect-retro-8-bit-sound-effect-145251.mp3"));
 		
 	}
-	
+
+
 	public int getHealth() { return health; }
 	public int getMaxHealth() { return maxHealth; }
 	public int getFire() { return fire; }

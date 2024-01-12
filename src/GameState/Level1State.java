@@ -42,7 +42,7 @@ public class Level1State extends GameState {
 		
 		bg = new Background("/Backgrounds/nightcitybg.gif", 0.1);
 		
-		player = new Player(tileMap);
+		player = new Player(tileMap, 3);
 		player.setPosition(120, 60);
 		
 		populateEnemies();

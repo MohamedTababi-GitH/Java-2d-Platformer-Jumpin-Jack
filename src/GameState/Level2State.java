@@ -36,14 +36,14 @@ public class Level2State extends GameState {
 
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/Tilesets/citytileset.png");
-		tileMap.loadMap("/Maps/level1-2.map");
+		tileMap.loadMap("/Maps/level1-3.map");
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(1);
 
-		bg = new Background("/Backgrounds/pinkcitybg.gif", 0.1);
+		bg = new Background("/Backgrounds/nightcitybg.gif", 0.1);
 
-		player = new Player(tileMap);
-		player.setPosition(30, 90);
+		player = new Player(tileMap, 1);
+		player.setPosition(120, 60);
 
 		populateEnemies();
 		spawnDumbbells();
@@ -53,7 +53,7 @@ public class Level2State extends GameState {
 
 		hud = new HUD(player);
 
-		bgMusic = new AudioPlayer("/Music/level1.mp3");
+		bgMusic = new AudioPlayer("/Music/title.mp3");
 		bgMusic.clip.loop(Clip.LOOP_CONTINUOUSLY);
 
 	}
@@ -149,7 +149,9 @@ public class Level2State extends GameState {
 				i--;
 				explosions.add(
 						new Explosion(e.getx(), e.gety()));
-				score += 50;
+				if(e.awardsPoints) {
+					score += 50;
+				}
 			}
 		}
 
@@ -221,8 +223,6 @@ public class Level2State extends GameState {
 		if(k == KeyEvent.VK_SPACE) player.setJumping(false);
 		//if(k == KeyEvent.VK_E) player.setGliding(false);
 	}
-
-
 }
 
 
