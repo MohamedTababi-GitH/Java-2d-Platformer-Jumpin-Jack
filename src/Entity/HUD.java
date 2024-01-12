@@ -73,7 +73,40 @@ public class HUD {
 				25,
 				40
 		);
-		
+
+		// TİME LİMİT
+		g.setColor(Color.getHSBColor(0.85F, 0.13F, 0.13F));
+		g.drawString(
+				player.remainingTime+"",
+				10,
+				59
+		);
+		g.setColor(Color.getHSBColor(0.85F, 0.13F, 0.13F));
+		g.drawString(
+				player.remainingTime+"",
+				9,
+				60
+		);
+		g.setColor(Color.getHSBColor(0.85F, 0.13F, 0.13F));
+		g.drawString(
+				player.remainingTime+"",
+				11,
+				60
+		);
+		g.setColor(Color.getHSBColor(0.85F, 0.13F, 0.13F));
+		g.drawString(
+				player.remainingTime+"",
+				10,
+				61
+		);
+
+		//Time
+		g.setColor(Color.WHITE);
+		g.drawString(
+				player.remainingTime+"",
+				10,
+				60
+		);
 	}
 	
 }

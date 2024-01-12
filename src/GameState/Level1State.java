@@ -21,6 +21,19 @@ public class Level1State extends GameState {
 	
 	private ArrayList<Enemy> enemies;
 
+	//time limit
+	/*
+	private int timeLimit;       // Total time allowed for the level
+	private int remainingTime;
+	 // Time remaining for the level
+	 */
+	private final long updateTimeInterval = 1000; // 1000 milliseconds = 1 second
+	private long lastUpdateTime;
+
+	private final int timeAwarded = 10;
+
+
+
 	// Caesar
 	ArrayList<Juice> juices;
 	ArrayList<Dumbbell> dumbbells;
@@ -59,7 +72,19 @@ public class Level1State extends GameState {
 		
 		bgMusic = new AudioPlayer("/Music/title.mp3");
 		bgMusic.clip.loop(Clip.LOOP_CONTINUOUSLY);
-		
+		bgMusic.play();
+
+
+		//time limit
+
+		player.timeLimit = 100;  // 300 seconds = 5 minutes
+		player.remainingTime = player.timeLimit;
+
+
+	}
+
+	public void addTime(int time) {
+		player.remainingTime += time;
 	}
 	
 	private void populateEnemies() {
@@ -87,6 +112,7 @@ public class Level1State extends GameState {
 		trophy =new Trophy(tileMap);
 		trophy.setPosition(2970,110);
 	}
+
 
 	private void spawnDumbbells(){
 		dumbbells = new ArrayList<Dumbbell>();
@@ -169,13 +195,33 @@ public class Level1State extends GameState {
 		if (trophy.intersects(player)){
 			bgMusic.stop();
 			//play a jingle here
-			gsm.setState(GameStateManager.LEVEL2STATE);
+			WinningState l2 = new WinningState(gsm);
+			l2.init();
+			gsm.setState(GameStateManager.WINNINGSTATE);
 			bg.update();
 			gsm.update();
 		}
 
 
-		
+		long currentTime = System.currentTimeMillis();
+		long elapsedTime = currentTime - lastUpdateTime;
+
+		// Check if the update interval has passed
+		if (elapsedTime >= updateTimeInterval) {
+			// Update the timer
+			player.remainingTime--;
+
+
+			// Check if time has run out
+			if (player.remainingTime <= 0) {
+
+				// Transition to game over state
+				bgMusic.stop();
+				gsm.setState(GameStateManager.GAMEOVERSTATE);
+			}
+
+			// Update lastUpdateTime to the current time
+			lastUpdateTime = currentTime;
 		// update all enemies
 		for(int i = 0; i < enemies.size(); i++) {
 			Enemy e = enemies.get(i);
@@ -189,19 +235,20 @@ public class Level1State extends GameState {
 				if(e.awardsPoints) {
 					score += 50;
 				}
+				}
 			}
-		}
-		
-		// update explosions
-		for(int i = 0; i < explosions.size(); i++) {
-			explosions.get(i).update();
-			if(explosions.get(i).shouldRemove()) {
-				explosions.remove(i);
-				i--;
+
+			// update explosions
+			for (int i = 0; i < explosions.size(); i++) {
+				explosions.get(i).update();
+				if (explosions.get(i).shouldRemove()) {
+					explosions.remove(i);
+					i--;
+				}
 			}
+			//update player score
+			player.setScore(player.getScore() + score);
 		}
-		//update player score
-		player.setScore(player.getScore() + score);
 	}
 	
 	public void draw(Graphics2D g) {
@@ -232,7 +279,7 @@ public class Level1State extends GameState {
 		for(int i = 0; i < juices.size(); i++) {
 			juices.get(i).draw(g);
 		}
-
+		
 		// draw explosions
 		for(int i = 0; i < explosions.size(); i++) {
 			explosions.get(i).setMapPosition(

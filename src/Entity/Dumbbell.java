@@ -13,6 +13,8 @@ public class Dumbbell extends MapObject {
     private BufferedImage[] sprites;
     private BufferedImage[] hitSprites;
 
+    private int timeAwarded;
+
     public Dumbbell(TileMap tm) {
 
         super(tm);
@@ -26,6 +28,8 @@ public class Dumbbell extends MapObject {
         height = 30;
         cwidth = 14;
         cheight = 14;
+
+
 
         // load sprites
         try {
