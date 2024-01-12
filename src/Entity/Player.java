@@ -29,7 +29,12 @@ public class Player extends MapObject {
 	private int fireBallDamage;
 	private ArrayList<Projectile> projectiles;
 
-	
+	//time
+
+	public int timeLimit;       // Total time allowed for the level
+	public int remainingTime;
+
+
 	// scratch
 	private boolean scratching;
 	private int scratchDamage;
@@ -219,6 +224,9 @@ public class Player extends MapObject {
 				d.update();
 				dumbbells.remove(d);
 				dumbAmt++;
+
+				//time award
+				remainingTime += 10;
 			}
 		}
 		return dumbAmt;

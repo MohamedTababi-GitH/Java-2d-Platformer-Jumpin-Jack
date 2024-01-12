@@ -20,6 +20,19 @@ public class Level1State extends GameState {
 	
 	private ArrayList<Enemy> enemies;
 
+	//time limit
+	/*
+	private int timeLimit;       // Total time allowed for the level
+	private int remainingTime;
+	 // Time remaining for the level
+	 */
+	private final long updateTimeInterval = 1000; // 1000 milliseconds = 1 second
+	private long lastUpdateTime;
+
+	private final int timeAwarded = 10;
+
+
+
 	// Caesar
 	ArrayList<Juice> juices;
 	ArrayList<Dumbbell> dumbbells;
@@ -27,8 +40,10 @@ public class Level1State extends GameState {
 	
 	private HUD hud;
 	Trophy trophy;
-	
+
+
 	private AudioPlayer bgMusic;
+
 	
 	public Level1State(GameStateManager gsm) {
 		this.gsm = gsm;
@@ -53,12 +68,23 @@ public class Level1State extends GameState {
 		spawnTrophy();
 		
 		explosions = new ArrayList<Explosion>();
-		
+
 		hud = new HUD(player);
 		
 		bgMusic = new AudioPlayer("/Music/title.mp3");
 		bgMusic.play();
+
+
+		//time limit
+
+		player.timeLimit = 100;  // 300 seconds = 5 minutes
+		player.remainingTime = player.timeLimit;
+
 		
+	}
+
+	public void addTime(int time) {
+		player.remainingTime += time;
 	}
 	
 	private void populateEnemies() {
@@ -161,22 +187,25 @@ public class Level1State extends GameState {
 		// update player
 		player.update();
 		tileMap.setPosition(
-			GamePanel.WIDTH / 2 - player.getx(),
-			GamePanel.HEIGHT / 2 - player.gety()
+				GamePanel.WIDTH / 2 - player.getx(),
+				GamePanel.HEIGHT / 2 - player.gety()
 		);
-		
+
 		// set background
 		bg.setPosition(tileMap.getx(), tileMap.gety());
-		
+
 		// attack enemies
 		player.checkAttack(enemies);
 		score += player.checkDumbbells(dumbbells) * 10;
+
+
+
 
 		// Caesar
 		player.checkJuice(juices);
 
 		//special trophy collision check
-		if (trophy.intersects(player)){
+		if (trophy.intersects(player)) {
 			bgMusic.stop();
 			//play a jingle here
 			WinningState l2 = new WinningState(gsm);
@@ -187,31 +216,54 @@ public class Level1State extends GameState {
 		}
 
 
+		long currentTime = System.currentTimeMillis();
+		long elapsedTime = currentTime - lastUpdateTime;
 
-		
-		// update all enemies
-		for(int i = 0; i < enemies.size(); i++) {
-			Enemy e = enemies.get(i);
-			e.update();
-			if(e.isDead()) {
-				enemies.remove(i);
-				i--;
-				explosions.add(
-					new Explosion(e.getx(), e.gety()));
-				score += 50;
+		// Check if the update interval has passed
+		if (elapsedTime >= updateTimeInterval) {
+			// Update the timer
+			player.remainingTime--;
+
+
+			// Check if time has run out
+			if (player.remainingTime <= 0) {
+
+				// Transition to game over state
+				bgMusic.stop();
+				gsm.setState(GameStateManager.GAMEOVERSTATE);
 			}
-		}
-		
-		// update explosions
-		for(int i = 0; i < explosions.size(); i++) {
-			explosions.get(i).update();
-			if(explosions.get(i).shouldRemove()) {
-				explosions.remove(i);
-				i--;
+
+			// Update lastUpdateTime to the current time
+			lastUpdateTime = currentTime;
+
+
+
+
+
+			// update all enemies
+			for (int i = 0; i < enemies.size(); i++) {
+				Enemy e = enemies.get(i);
+				e.update();
+				if (e.isDead()) {
+					enemies.remove(i);
+					i--;
+					explosions.add(
+							new Explosion(e.getx(), e.gety()));
+					score += 50;
+				}
 			}
+
+			// update explosions
+			for (int i = 0; i < explosions.size(); i++) {
+				explosions.get(i).update();
+				if (explosions.get(i).shouldRemove()) {
+					explosions.remove(i);
+					i--;
+				}
+			}
+			//update player score
+			player.setScore(player.getScore() + score);
 		}
-		//update player score
-		player.setScore(player.getScore() + score);
 	}
 	
 	public void draw(Graphics2D g) {

@@ -70,7 +70,14 @@ public class HUD {
 				25,
 				40
 		);
-		
+
+		// TİME LİMİT
+		g.setColor(Color.getHSBColor(0.85F, 0.13F, 0.13F));
+		g.drawString(
+				"Time: " + player.remainingTime,
+				25,
+				60
+		);
 	}
 	
 }
