@@ -50,7 +50,8 @@ public class Level2State extends GameState {
 
 		explosions = new ArrayList<Explosion>();
 
-		hud = new HUD(player);
+		// score and health continuity
+		hud = new HUD(HUD.getPlayer());
 
 		bgMusic = new AudioPlayer("/Music/level1.mp3");
 		bgMusic.play();
@@ -122,6 +123,7 @@ public class Level2State extends GameState {
 
 		//reset score tally for current frame
 		score = 0;
+		//System.out.println(player.getScore());
 
 		// update player
 		player.update();

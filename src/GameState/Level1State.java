@@ -181,7 +181,7 @@ public class Level1State extends GameState {
 			//play a jingle here
 			WinningState l2 = new WinningState(gsm);
 			l2.init();
-			gsm.setState(GameStateManager.WINNINGSTATE);
+			gsm.setState(GameStateManager.LEVEL2STATE);
 			bg.update();
 			gsm.update();
 		}

@@ -6,7 +6,10 @@ import javax.imageio.ImageIO;
 
 public class HUD {
 	
-	private Player player;
+	private static Player player;
+	public static Player getPlayer() {
+		return player;
+	}
 	
 	private BufferedImage[] image;
 	private Font font;
