@@ -32,7 +32,6 @@ public class Level2State extends GameState {
 	}
 
 	public void init() {
-
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/Tilesets/citytileset.png");
 		tileMap.loadMap("/Maps/level1-1.map");
@@ -41,8 +40,9 @@ public class Level2State extends GameState {
 
 		bg = new Background("/Backgrounds/nightcitybg.gif", 0.1);
 
-		player = new Player(tileMap);
-		player.setPosition(100, 100);
+		// Loading player from level 1
+		player = HUD.getPlayer();
+		HUD.getPlayer().setPosition(100, 100);
 
 		populateEnemies();
 		spawnDumbbells();
@@ -123,7 +123,6 @@ public class Level2State extends GameState {
 
 		//reset score tally for current frame
 		score = 0;
-		//System.out.println(player.getScore());
 
 		// update player
 		player.update();
@@ -185,8 +184,7 @@ public class Level2State extends GameState {
 		// draw tilemap
 		tileMap.draw(g);
 
-		// draw player
-		player.draw(g);
+
 
 		//draw trophy
 		trophy.draw(g);
@@ -211,7 +209,8 @@ public class Level2State extends GameState {
 
 		// draw hud
 		hud.draw(g);
-
+		// draw player
+		player.draw(g);
 	}
 
 	public void keyPressed(int k) {
