@@ -73,6 +73,7 @@ public class Burg extends Enemy{
     }
 
     private void moveLeft() {
+        maxSpeed = 0.5;
         left = true;
         right = false;
         facingRight = false;
@@ -82,6 +83,7 @@ public class Burg extends Enemy{
     }
 
     private void moveRight() {
+        maxSpeed = 0.5;
         left = false;
         right = true;
         facingRight = true;
@@ -91,6 +93,7 @@ public class Burg extends Enemy{
     }
 
     private void rushLeft() {
+        maxSpeed = 1;
         left = true;
         right = false;
         facingRight = false;
@@ -100,6 +103,7 @@ public class Burg extends Enemy{
     }
 
     private void rushRight() {
+        maxSpeed = 1;
         left = false;
         right = true;
         facingRight = true;
@@ -120,7 +124,7 @@ public class Burg extends Enemy{
 
     private boolean caughtIn4k(int range){
         if((x - playerX) <= range && (playerX - x) <= range &&
-                (y - playerY) <= 30 && (playerY - y) <= 50){
+                (y - playerY) <= 60 && (playerY - y) <= 60){
             return true;
         }
         return false;
@@ -155,7 +159,7 @@ public class Burg extends Enemy{
         lastX = x;
         lastY = y;
 
-        if(health == 1 && caughtIn4k(70)){
+        if(health == 1 && caughtIn4k(150)){
             state = EnemyState.LOW_HEALTH;
         }
         if(caughtIn4k(120)){
@@ -197,7 +201,7 @@ public class Burg extends Enemy{
 
 
 
-        if (!caughtIn4k(100)){
+        if (!caughtIn4k(150)){
             state = EnemyState.PATROLLING;
         }
     }
