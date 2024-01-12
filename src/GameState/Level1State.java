@@ -20,6 +20,9 @@ public class Level1State extends GameState {
 	private Player player;
 	
 	private ArrayList<Enemy> enemies;
+
+	// Caesar
+	ArrayList<Juice> juices;
 	ArrayList<Dumbbell> dumbbells;
 	private ArrayList<Explosion> explosions;
 	
@@ -47,6 +50,7 @@ public class Level1State extends GameState {
 		
 		populateEnemies();
 		spawnDumbbells();
+		spawnJuice();
 		spawnTrophy();
 		
 		explosions = new ArrayList<Explosion>();
@@ -100,6 +104,36 @@ public class Level1State extends GameState {
 		}
 	}
 
+
+
+// Caesar code
+	private void spawnJuice(){
+		juices = new ArrayList<Juice>();
+		Juice j;
+
+		Point[] points = {
+				new Point(150,150),
+				new Point(200,200),
+				new Point(250,200),
+				new Point(300,200),
+
+				/*
+				new Point(2000,200),
+				new Point(1500,100),
+				new Point(300,200)
+
+				 */
+		};
+		for(int i = 0; i < points.length; i++) {
+			j = new Juice(tileMap);
+			j.setPosition(points[i].x, points[i].y);
+			juices.add(j);
+		}
+
+	}
+
+
+
 	public void update() {
 
 		//player is dead
@@ -128,6 +162,9 @@ public class Level1State extends GameState {
 		player.checkAttack(enemies);
 		score += player.checkDumbbells(dumbbells) * 10;
 
+		// Caesar
+		player.checkJuice(juices);
+
 		//special trophy collision check
 		if (trophy.intersects(player)){
 			bgMusic.stop();
@@ -142,7 +179,7 @@ public class Level1State extends GameState {
 		// update all enemies
 		for(int i = 0; i < enemies.size(); i++) {
 			Enemy e = enemies.get(i);
-			e.getPlayerLocation(player.getx(), player.gety());
+            e.getPlayerLocation(player.getx(), player.gety());
 			e.update();
 			if(e.isDead()) {
 				enemies.remove(i);
@@ -191,7 +228,11 @@ public class Level1State extends GameState {
 		for(int i = 0; i < dumbbells.size(); i++) {
 			dumbbells.get(i).draw(g);
 		}
-		
+// Caesar code
+		for(int i = 0; i < juices.size(); i++) {
+			juices.get(i).draw(g);
+		}
+
 		// draw explosions
 		for(int i = 0; i < explosions.size(); i++) {
 			explosions.get(i).setMapPosition(

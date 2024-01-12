@@ -229,6 +229,32 @@ public class Player extends MapObject {
 		}
 		return dumbAmt;
 	}
+
+	// Caesar code
+	public void checkJuice(ArrayList<Juice> juices){
+		double initialSpeed = 0.6;
+		for(int i = 0; i < juices.size(); i++) {
+			Juice j = juices.get(i);
+			if (intersects(j)) {
+				sfx.get("jump").play();
+					maxSpeed += 3;
+					new java.util.Timer().schedule(
+						new java.util.TimerTask() {
+							@Override
+							public void run() {
+							maxSpeed-= 3;
+							}
+						},
+						7000 // 7 seconds in milliseconds
+				);
+				j.setHit();
+				j.update();
+				juices.remove(j);
+			}
+		}
+
+	}
+
 	public void hit(int damage) {
 		if(flinching) return;
 		health -= damage;
@@ -438,7 +464,6 @@ public class Player extends MapObject {
 	}
 	
 	public void draw(Graphics2D g) {
-		
 		setMapPosition();
 		
 		// draw fireballs
@@ -466,7 +491,13 @@ public class Player extends MapObject {
 	public void setScore(int score) {
 		this.score = score;
 	}
+
+	// Code Caesar added
+	public static double playerSpeed(){
+		return moveSpeed;
+	}
 }
+
 
 
 

@@ -42,8 +42,9 @@ public class Level2State extends GameState {
 
 		bg = new Background("/Backgrounds/nightcitybg.gif", 0.1);
 
-		player = new Player(tileMap, 1);
-		player.setPosition(120, 60);
+		// Loading player from level 1
+		player = HUD.getPlayer();
+		HUD.getPlayer().setPosition(100, 100);
 
 		populateEnemies();
 		spawnDumbbells();
@@ -51,7 +52,8 @@ public class Level2State extends GameState {
 
 		explosions = new ArrayList<Explosion>();
 
-		hud = new HUD(player);
+		// score and health continuity
+		hud = new HUD(HUD.getPlayer());
 
 		bgMusic = new AudioPlayer("/Music/title.mp3");
 		bgMusic.clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -223,6 +225,7 @@ public class Level2State extends GameState {
 		if(k == KeyEvent.VK_SPACE) player.setJumping(false);
 		//if(k == KeyEvent.VK_E) player.setGliding(false);
 	}
+
 }
 
 
