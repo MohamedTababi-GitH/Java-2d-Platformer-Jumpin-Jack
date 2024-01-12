@@ -158,7 +158,7 @@ public class Burg extends Enemy{
         if(health == 1 && caughtIn4k(70)){
             state = EnemyState.LOW_HEALTH;
         }
-        if(caughtIn4k(70)){
+        if(caughtIn4k(120)){
             state = EnemyState.ALERT;
         }
     }
@@ -197,7 +197,7 @@ public class Burg extends Enemy{
 
 
 
-        if (!caughtIn4k(150)){
+        if (!caughtIn4k(100)){
             state = EnemyState.PATROLLING;
         }
     }
@@ -231,7 +231,7 @@ public class Burg extends Enemy{
         }
 
 
-/*
+
         // default movement
         if(left) {
             dx -= moveSpeed;
@@ -250,7 +250,7 @@ public class Burg extends Enemy{
         if(falling) {
             dy += fallSpeed;
         }
-*/
+
         //player spotted
 
         //write code

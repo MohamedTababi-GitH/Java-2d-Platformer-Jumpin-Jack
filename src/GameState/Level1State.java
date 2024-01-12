@@ -161,6 +161,8 @@ public class Level1State extends GameState {
 
 
 	public void update() {
+		long currentTime = System.currentTimeMillis();
+		long elapsedTime = currentTime - lastUpdateTime;
 
 		//player is dead
 
@@ -176,6 +178,29 @@ public class Level1State extends GameState {
 
 		// update player
 		player.update();
+		for(int i = 0; i < enemies.size(); i++) {
+			Enemy e = enemies.get(i);
+			e.getPlayerLocation(player.getx(), player.gety());
+			e.update();
+			if(e.isDead()) {
+				enemies.remove(i);
+				i--;
+				explosions.add(
+						new Explosion(e.getx(), e.gety()));
+				if(e.awardsPoints) {
+					score += 50;
+				}
+			}
+		}
+
+		// update explosions
+		for (int i = 0; i < explosions.size(); i++) {
+			explosions.get(i).update();
+			if (explosions.get(i).shouldRemove()) {
+				explosions.remove(i);
+				i--;
+			}
+		}
 		tileMap.setPosition(
 			GamePanel.WIDTH / 2 - player.getx(),
 			GamePanel.HEIGHT / 2 - player.gety()
@@ -203,8 +228,6 @@ public class Level1State extends GameState {
 		}
 
 
-		long currentTime = System.currentTimeMillis();
-		long elapsedTime = currentTime - lastUpdateTime;
 
 		// Check if the update interval has passed
 		if (elapsedTime >= updateTimeInterval) {
@@ -223,29 +246,7 @@ public class Level1State extends GameState {
 			// Update lastUpdateTime to the current time
 			lastUpdateTime = currentTime;
 		// update all enemies
-		for(int i = 0; i < enemies.size(); i++) {
-			Enemy e = enemies.get(i);
-            e.getPlayerLocation(player.getx(), player.gety());
-			e.update();
-			if(e.isDead()) {
-				enemies.remove(i);
-				i--;
-				explosions.add(
-					new Explosion(e.getx(), e.gety()));
-				if(e.awardsPoints) {
-					score += 50;
-				}
-				}
-			}
 
-			// update explosions
-			for (int i = 0; i < explosions.size(); i++) {
-				explosions.get(i).update();
-				if (explosions.get(i).shouldRemove()) {
-					explosions.remove(i);
-					i--;
-				}
-			}
 			//update player score
 			player.setScore(player.getScore() + score);
 		}
