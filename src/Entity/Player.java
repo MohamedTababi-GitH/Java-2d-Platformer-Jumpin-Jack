@@ -231,19 +231,16 @@ public class Player extends MapObject {
 			Juice j = juices.get(i);
 			if (intersects(j)) {
 				sfx.get("jump").play();
-				if (moveSpeed < maxSpeed) {
-					moveSpeed+=1;
+					maxSpeed += 3;
 					new java.util.Timer().schedule(
 						new java.util.TimerTask() {
 							@Override
 							public void run() {
-							moveSpeed = initialSpeed;
+							maxSpeed-= 3;
 							}
 						},
-						5000 // 5 seconds in milliseconds
+						7000 // 7 seconds in milliseconds
 				);
-
-				}
 				j.setHit();
 				j.update();
 				juices.remove(j);
