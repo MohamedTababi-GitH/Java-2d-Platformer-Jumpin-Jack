@@ -1,17 +1,18 @@
 package GameState;
 
-import Main.GamePanel;
-import TileMap.*;
-import Entity.*;
-import Entity.Enemies.*;
 import Audio.AudioPlayer;
+import Entity.*;
+import Entity.Enemies.Burg;
+import Main.GamePanel;
+import TileMap.Background;
+import TileMap.TileMap;
 
 import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-public class Level2State extends GameState {
+public class Level5State extends GameState {
 
 	private TileMap tileMap;
 	private int score;
@@ -44,7 +45,7 @@ public class Level2State extends GameState {
 
 	private AudioPlayer bgMusic;
 
-	public Level2State(GameStateManager gsm) {
+	public Level5State(GameStateManager gsm) {
 		this.gsm = gsm;
 	}
 
@@ -52,17 +53,17 @@ public class Level2State extends GameState {
 
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/Tilesets/citytileset.png");
-		tileMap.loadMap("/Maps/level1-3.map");
+		tileMap.loadMap("/Maps/level1-6.map");
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(1);
 
-		bg = new Background("/Backgrounds/pinkcitybg.gif", 0.1);
+		bg = new Background("/Backgrounds/nightcitybg.gif", 0.1);
 
 		player = HUD.getPlayer();
 		int php = player.getHealth();
 		int psc = player.getScore();
 		player = new Player(tileMap, php, psc);
-		player.setPosition(30, 90);
+		player.setPosition(45, 195);
 
 		populateEnemies();
 		spawnDumbbells();
@@ -97,11 +98,12 @@ public class Level2State extends GameState {
 		Enemy s;
 		Burg b;
 		Point[] points = new Point[] {
-				new Point(450, 60),
-				new Point(750, 120),
-				new Point(1050, 120),
-				new Point(1800, 90),
-				new Point(2760, 150),
+				new Point(1245, 15),
+				new Point(1185, 135),
+				new Point(1815, 195),
+				new Point(2115, 195),
+				new Point(2265, 105),
+				new Point(2565, 105),
 		};
 		for(int i = 0; i < points.length; i++) {
 			s = new Burg(tileMap);
@@ -115,7 +117,7 @@ public class Level2State extends GameState {
 	//spawn trophy
 	private void spawnTrophy(){
 		trophy =new Trophy(tileMap);
-		trophy.setPosition(3540,195);
+		trophy.setPosition(2685, 195);
 	}
 
 
@@ -124,11 +126,9 @@ public class Level2State extends GameState {
 		Dumbbell d;
 
 		Point[] points = {
-				new Point(885, 15),
-				new Point(2175, 45),
-				new Point(2955 ,15),
-				new Point(3135, 105),
-				new Point(3255, 135),
+				new Point(1995, 45),
+				new Point(2025, 45),
+				new Point(2055, 45),
 		};
 		for(int i = 0; i < points.length; i++) {
 			d = new Dumbbell(tileMap);
@@ -145,7 +145,7 @@ public class Level2State extends GameState {
 		Juice j;
 
 		Point[] points = {
-				new Point(1245, 195)
+				new Point(945, 45)
 		};
 		for(int i = 0; i < points.length; i++) {
 			j = new Juice(tileMap);
@@ -216,7 +216,8 @@ public class Level2State extends GameState {
 		//special trophy collision check
 		if (trophy.intersects(player)){
 			bgMusic.stop();
-			gsm.setState(GameStateManager.LEVEL3STATE);
+			//play a jingle here
+			gsm.setState(GameStateManager.WINNINGSTATE);
 			bg.update();
 			gsm.update();
 		}

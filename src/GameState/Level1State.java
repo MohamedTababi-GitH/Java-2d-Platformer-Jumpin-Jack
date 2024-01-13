@@ -58,7 +58,7 @@ public class Level1State extends GameState {
 		
 		bg = new Background("/Backgrounds/nightcitybg.gif", 0.1);
 		
-		player = new Player(tileMap, 3);
+		player = new Player(tileMap, 3, 0);
 		player.setPosition(120, 60);
 		
 		populateEnemies();
@@ -69,8 +69,8 @@ public class Level1State extends GameState {
 		explosions = new ArrayList<Explosion>();
 		
 		hud = new HUD(player, 0, 3);
-		
-		bgMusic = new AudioPlayer("/Music/title.mp3");
+
+		bgMusic = new AudioPlayer("/Music/level1.mp3");
 		bgMusic.clip.loop(Clip.LOOP_CONTINUOUSLY);
 		bgMusic.play();
 
@@ -110,7 +110,7 @@ public class Level1State extends GameState {
 	//spawn trophy
 	private void spawnTrophy(){
 		trophy =new Trophy(tileMap);
-		trophy.setPosition(2970,110);
+		trophy.setPosition(2985,135);
 	}
 
 
@@ -119,8 +119,8 @@ public class Level1State extends GameState {
 		Dumbbell d;
 
 		Point[] points = {
-				new Point(630,60),
-				new Point(750,60),
+				new Point(645,75),
+				new Point(765,75),
 		};
 		for(int i = 0; i < points.length; i++) {
 			d = new Dumbbell(tileMap);
@@ -291,8 +291,8 @@ public class Level1State extends GameState {
 
 		
 	}
-	
-	public void keyPressed(int k) {
+
+	public void keyPressed(int k) throws NullPointerException{
 		if(k == KeyEvent.VK_A) player.setLeft(true);
 		if(k == KeyEvent.VK_D) player.setRight(true);
 		if(k == KeyEvent.VK_W) player.setUp(true);
@@ -302,8 +302,8 @@ public class Level1State extends GameState {
 		if(k == KeyEvent.VK_L) player.setScratching();
 		//if(k == KeyEvent.VK_F) player.setFiring();
 	}
-	
-	public void keyReleased(int k) {
+
+	public void keyReleased(int k) throws NullPointerException{
 		if(k == KeyEvent.VK_A) player.setLeft(false);
 		if(k == KeyEvent.VK_D) player.setRight(false);
 		if(k == KeyEvent.VK_W) player.setUp(false);

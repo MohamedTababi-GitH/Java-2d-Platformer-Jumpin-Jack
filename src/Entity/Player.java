@@ -60,7 +60,7 @@ public class Player extends MapObject {
 	
 	private HashMap<String, AudioPlayer> sfx;
 	
-	public Player(TileMap tm, int phealth) {
+	public Player(TileMap tm, int phealth, int pscore) {
 		
 		super(tm);
 		
@@ -68,7 +68,7 @@ public class Player extends MapObject {
 		height = 30;
 		cwidth = 20;
 		cheight = 20;
-		
+		score = pscore;
 		moveSpeed = 0.6;
 		maxSpeed = 3.2;
 		stopSpeed = 0.4;
@@ -230,7 +230,7 @@ public class Player extends MapObject {
 				d.update();
 				dumbbells.remove(d);
 				dumbAmt++;
-
+				score+=15;
 				//time award
 				remainingTime += 10;
 			}
@@ -255,6 +255,7 @@ public class Player extends MapObject {
 						},
 						7000 // 7 seconds in milliseconds
 				);
+					score+=35;
 				j.setHit();
 				j.update();
 				juices.remove(j);
