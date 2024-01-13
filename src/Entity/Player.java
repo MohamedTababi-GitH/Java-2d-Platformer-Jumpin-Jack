@@ -171,7 +171,6 @@ public class Player extends MapObject {
 		for(int i = 0; i < enemies.size(); i++) {
 			
 			Enemy e = enemies.get(i);
-			
 			// scratch attack
 			if(scratching) {
 				if(facingRight) {
@@ -238,19 +237,20 @@ public class Player extends MapObject {
 		return dumbAmt;
 	}
 
+
 	// Caesar code
 	public void checkJuice(ArrayList<Juice> juices){
 		double initialSpeed = 0.6;
 		for(int i = 0; i < juices.size(); i++) {
 			Juice j = juices.get(i);
 			if (intersects(j)) {
-				sfx.get("jump").play();
-					maxSpeed += 3;
+				sfx.get("get").play();
+					maxSpeed += 1;
 					new java.util.Timer().schedule(
 						new java.util.TimerTask() {
 							@Override
 							public void run() {
-							maxSpeed-= 3;
+							maxSpeed-=1;
 							}
 						},
 						7000 // 7 seconds in milliseconds

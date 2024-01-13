@@ -1,6 +1,5 @@
 package GameState;
 
-import java.util.ArrayList;
 
 public class GameStateManager {
 	
@@ -57,6 +56,7 @@ public class GameStateManager {
 		loadState(currentState);
 		gameStates[currentState].init();
 	}
+
 	
 	public void update() {
 		try {

@@ -177,7 +177,10 @@ public class Level1State extends GameState {
 				explosions.add(
 						new Explosion(e.getx(), e.gety()));
 				if(e.awardsPoints) {
-					score += 50;
+					if(e.equals((Burg)e))
+						score+=50;
+					else score +=100;
+					player.setScore(player.getScore() + score);
 				}
 			}
 		}
@@ -245,12 +248,12 @@ public class Level1State extends GameState {
 		
 		// draw tilemap
 		tileMap.draw(g);
-		
-		// draw player
-		player.draw(g);
 
 		//draw trophy
 		trophy.draw(g);
+		// draw player
+		player.draw(g);
+
 
 		
 		// draw enemies

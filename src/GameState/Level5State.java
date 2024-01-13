@@ -3,6 +3,8 @@ package GameState;
 import Audio.AudioPlayer;
 import Entity.*;
 import Entity.Enemies.Burg;
+import Entity.Enemies.Fry;
+import Entity.Enemies.Ice;
 import Main.GamePanel;
 import TileMap.Background;
 import TileMap.TileMap;
@@ -106,10 +108,20 @@ public class Level5State extends GameState {
 				new Point(2565, 105),
 		};
 		for(int i = 0; i < points.length; i++) {
-			s = new Burg(tileMap);
-			s.setPosition(points[i].x, points[i].y);
-			enemies.add(s);
+			if (i%5==0){
+				s = new Fry(tileMap);
+				s.setPosition(points[i].x, points[i].y);
+				enemies.add(s);}
+			else if (i%2==0){
+				s = new Ice(tileMap);
+				s.setPosition(points[i].x, points[i].y);
+				enemies.add(s);}
+			else{
+				s = new Burg(tileMap);
+				s.setPosition(points[i].x, points[i].y);
+				enemies.add(s);}
 		}
+
 
 
 	}
@@ -185,7 +197,10 @@ public class Level5State extends GameState {
 				explosions.add(
 						new Explosion(e.getx(), e.gety()));
 				if(e.awardsPoints) {
-					score += 50;
+					if(e.equals((Burg)e))
+						score+=50;
+					else score +=100;
+					player.setScore(player.getScore() + score);
 				}
 			}
 		}
@@ -254,11 +269,11 @@ public class Level5State extends GameState {
 		// draw tilemap
 		tileMap.draw(g);
 
+		//draw trophy
+		trophy.draw(g);
 		// draw player
 		player.draw(g);
 
-		//draw trophy
-		trophy.draw(g);
 
 
 		// draw enemies

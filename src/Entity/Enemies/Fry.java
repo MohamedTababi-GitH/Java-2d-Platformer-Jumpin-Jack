@@ -1,14 +1,14 @@
 package Entity.Enemies;
 
-import Entity.*;
+import Entity.Animation;
+import Entity.Enemy;
 import TileMap.TileMap;
 
-import java.awt.image.BufferedImage;
-import java.awt.Graphics2D;
-import java.lang.Math;
 import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
-public class Burg extends Enemy{
+public class Fry extends Enemy{
 
     //need enemy state for burg, slug will stay dumb
     private EnemyState state;
@@ -16,14 +16,14 @@ public class Burg extends Enemy{
 
     private BufferedImage[] sprites;
 
-    public Burg(TileMap tm) {
+    public Fry(TileMap tm) {
 
         super(tm);
         //it should start out as patrolling
         state = EnemyState.START;
 
-        moveSpeed = 0.5;
-        maxSpeed = 0.5;
+        moveSpeed = 0.4;
+        maxSpeed = 0.8;
         fallSpeed = 0.2;
         maxFallSpeed = 10.0;
 
@@ -32,8 +32,8 @@ public class Burg extends Enemy{
         cwidth = 20;
         cheight = 20;
 
-        health = maxHealth = 5;
-        damage = 1;
+        health = maxHealth = 3;
+        damage = 2;
 
 
 
@@ -44,7 +44,7 @@ public class Burg extends Enemy{
 
             BufferedImage spritesheet = ImageIO.read(
                     getClass().getResourceAsStream(
-                            "/Sprites/Enemies/burger.gif"
+                            "/Sprites/Enemies/freedomfry1.gif"
                     )
             );
 
@@ -73,7 +73,7 @@ public class Burg extends Enemy{
     }
 
     private void moveLeft() {
-        maxSpeed = 0.5;
+        maxSpeed = 0.8;
         left = true;
         right = false;
         facingRight = false;
@@ -83,7 +83,7 @@ public class Burg extends Enemy{
     }
 
     private void moveRight() {
-        maxSpeed = 0.5;
+        maxSpeed = 0.8;
         left = false;
         right = true;
         facingRight = true;
@@ -93,7 +93,7 @@ public class Burg extends Enemy{
     }
 
     private void rushLeft() {
-        maxSpeed = 1;
+        maxSpeed = 1.4;
         left = true;
         right = false;
         facingRight = false;
@@ -103,7 +103,7 @@ public class Burg extends Enemy{
     }
 
     private void rushRight() {
-        maxSpeed = 1;
+        maxSpeed = 1.4;
         left = false;
         right = true;
         facingRight = true;
@@ -211,7 +211,7 @@ public class Burg extends Enemy{
 
         //I want a couple different cases of movement
 
-        if (y > tileMap.getHeight()-height/2-10) {
+        if (y > tileMap.getHeight()-getHeight()/2-10) {
             awardsPoints = false;
             health = 0;
             dead = true;
