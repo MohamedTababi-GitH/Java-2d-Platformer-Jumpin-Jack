@@ -121,7 +121,7 @@ public class Level4State extends GameState {
 	//spawn trophy
 	private void spawnTrophy(){
 		trophy =new Trophy(tileMap);
-		trophy.setPosition(3540,195);
+		trophy.setPosition(3540,135);
 	}
 
 

@@ -133,7 +133,7 @@ public class Level3State extends GameState {
 				new Point(1875, 165),
 				new Point(1875, 195),
 				new Point(2235, 75),
-				new Point(2285, 75),
+				new Point(2265, 75),
 				new Point(2295, 75),
 				new Point(2325, 75),
 		};
