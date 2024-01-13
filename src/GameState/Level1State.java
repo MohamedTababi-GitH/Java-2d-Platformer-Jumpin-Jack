@@ -110,7 +110,7 @@ public class Level1State extends GameState {
 	//spawn trophy
 	private void spawnTrophy(){
 		trophy =new Trophy(tileMap);
-		trophy.setPosition(2985,135);
+		trophy.setPosition(2985,105);
 	}
 
 
@@ -137,7 +137,7 @@ public class Level1State extends GameState {
 		Juice j;
 
 		Point[] points = {
-				new Point(1920,60)
+				new Point(1935,75)
 		};
 		for(int i = 0; i < points.length; i++) {
 			j = new Juice(tileMap);
