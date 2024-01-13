@@ -68,7 +68,7 @@ public class Level1State extends GameState {
 		
 		explosions = new ArrayList<Explosion>();
 		
-		hud = new HUD(player);
+		hud = new HUD(player, 0, 3);
 		
 		bgMusic = new AudioPlayer("/Music/title.mp3");
 		bgMusic.clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -209,9 +209,7 @@ public class Level1State extends GameState {
 		if (trophy.intersects(player)){
 			bgMusic.stop();
 			//play a jingle here
-			WinningState l2 = new WinningState(gsm);
-			l2.init();
-			gsm.setState(GameStateManager.WINNINGSTATE);
+			gsm.setState(GameStateManager.LEVEL2STATE);
 			bg.update();
 			gsm.update();
 		}
@@ -281,8 +279,6 @@ public class Level1State extends GameState {
 			g.drawString("Use A and D to move around!",30,150);
 		if (player.getx() > 450 && player.getx() < 570)
 			g.drawString("Use Spacebar to jump!",30,90);
-		if (player.getx() > 600 && player.getx() < 810)
-			g.drawString("Dumbbells make you stronger!",40,210);
 		if (player.getx() > 600 && player.getx() < 810)
 			g.drawString("Dumbbells make you stronger!",40,210);
 		if (player.getx() > 1350 && player.getx() < 1650)

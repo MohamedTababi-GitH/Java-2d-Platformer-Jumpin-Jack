@@ -14,7 +14,7 @@ public class HUD {
 	private BufferedImage[] image;
 	private Font font;
 	
-	public HUD(Player p) {
+	public HUD(Player p, int score, int health) {
 		player = p;
 		try {
 			image = new BufferedImage[2];

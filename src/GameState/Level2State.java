@@ -20,6 +20,22 @@ public class Level2State extends GameState {
 	private Player player;
 
 	private ArrayList<Enemy> enemies;
+
+	//time limit
+	/*
+	private int timeLimit;       // Total time allowed for the level
+	private int remainingTime;
+	 // Time remaining for the level
+	 */
+	private final long updateTimeInterval = 1000; // 1000 milliseconds = 1 second
+	private long lastUpdateTime;
+
+	private final int timeAwarded = 10;
+
+
+
+	// Caesar
+	ArrayList<Juice> juices;
 	ArrayList<Dumbbell> dumbbells;
 	private ArrayList<Explosion> explosions;
 
@@ -40,24 +56,35 @@ public class Level2State extends GameState {
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(1);
 
-		bg = new Background("/Backgrounds/nightcitybg.gif", 0.1);
+		bg = new Background("/Backgrounds/pinkcitybg.gif", 0.1);
 
-		// Loading player from level 1
-		player = HUD.getPlayer();
-		HUD.getPlayer().setPosition(100, 100);
+		player = new Player(tileMap, 3);
+		player.setPosition(30, 90);
 
 		populateEnemies();
 		spawnDumbbells();
+		spawnJuice();
 		spawnTrophy();
 
 		explosions = new ArrayList<Explosion>();
 
-		// score and health continuity
-		hud = new HUD(HUD.getPlayer());
+		hud = new HUD(player, player.getScore(), player.getHealth());
 
 		bgMusic = new AudioPlayer("/Music/title.mp3");
 		bgMusic.clip.loop(Clip.LOOP_CONTINUOUSLY);
+		bgMusic.play();
 
+
+		//time limit
+
+		player.timeLimit = 100;  // 300 seconds = 5 minutes
+		player.remainingTime = player.timeLimit;
+
+
+	}
+
+	public void addTime(int time) {
+		player.remainingTime += time;
 	}
 
 	private void populateEnemies() {
@@ -83,8 +110,9 @@ public class Level2State extends GameState {
 	//spawn trophy
 	private void spawnTrophy(){
 		trophy =new Trophy(tileMap);
-		trophy.setPosition(2970,110);
+		trophy.setPosition(3540,170);
 	}
+
 
 	private void spawnDumbbells(){
 		dumbbells = new ArrayList<Dumbbell>();
@@ -93,7 +121,6 @@ public class Level2State extends GameState {
 		Point[] points = {
 				new Point(630,60),
 				new Point(750,60),
-				new Point(1950,60),
 		};
 		for(int i = 0; i < points.length; i++) {
 			d = new Dumbbell(tileMap);
@@ -102,7 +129,29 @@ public class Level2State extends GameState {
 		}
 	}
 
+
+
+	// Caesar code
+	private void spawnJuice(){
+		juices = new ArrayList<Juice>();
+		Juice j;
+
+		Point[] points = {
+				new Point(1920,60)
+		};
+		for(int i = 0; i < points.length; i++) {
+			j = new Juice(tileMap);
+			j.setPosition(points[i].x, points[i].y);
+			juices.add(j);
+		}
+
+	}
+
+
+
 	public void update() {
+		long currentTime = System.currentTimeMillis();
+		long elapsedTime = currentTime - lastUpdateTime;
 
 		//player is dead
 
@@ -118,30 +167,6 @@ public class Level2State extends GameState {
 
 		// update player
 		player.update();
-		tileMap.setPosition(
-				GamePanel.WIDTH / 2 - player.getx(),
-				GamePanel.HEIGHT / 2 - player.gety()
-		);
-
-		// set background
-		bg.setPosition(tileMap.getx(), tileMap.gety());
-
-		// attack enemies
-		player.checkAttack(enemies);
-		score += player.checkDumbbells(dumbbells) * 10;
-
-		//special trophy collision check
-		if (trophy.intersects(player)){
-			bgMusic.stop();
-			//play a jingle here
-			gsm.setState(GameStateManager.LEVEL2STATE);
-			bg.update();
-			gsm.update();
-		}
-
-
-
-		// update all enemies
 		for(int i = 0; i < enemies.size(); i++) {
 			Enemy e = enemies.get(i);
 			e.getPlayerLocation(player.getx(), player.gety());
@@ -158,19 +183,65 @@ public class Level2State extends GameState {
 		}
 
 		// update explosions
-		for(int i = 0; i < explosions.size(); i++) {
+		for (int i = 0; i < explosions.size(); i++) {
 			explosions.get(i).update();
-			if(explosions.get(i).shouldRemove()) {
+			if (explosions.get(i).shouldRemove()) {
 				explosions.remove(i);
 				i--;
 			}
 		}
-		//update player score
-		player.setScore(player.getScore() + score);
+		tileMap.setPosition(
+				GamePanel.WIDTH / 2 - player.getx(),
+				GamePanel.HEIGHT / 2 - player.gety()
+		);
+
+		// set background
+		bg.setPosition(tileMap.getx(), tileMap.gety());
+
+		// attack enemies
+		player.checkAttack(enemies);
+		score += player.checkDumbbells(dumbbells) * 10;
+
+		// Caesar
+		player.checkJuice(juices);
+
+		//special trophy collision check
+		if (trophy.intersects(player)){
+			bgMusic.stop();
+			//play a jingle here
+			WinningState l2 = new WinningState(gsm);
+			l2.init();
+			gsm.setState(GameStateManager.WINNINGSTATE);
+			bg.update();
+			gsm.update();
+		}
+
+
+
+		// Check if the update interval has passed
+		if (elapsedTime >= updateTimeInterval) {
+			// Update the timer
+			player.remainingTime--;
+
+
+			// Check if time has run out
+			if (player.remainingTime <= 0) {
+
+				// Transition to game over state
+				bgMusic.stop();
+				gsm.setState(GameStateManager.GAMEOVERSTATE);
+			}
+
+			// Update lastUpdateTime to the current time
+			lastUpdateTime = currentTime;
+			// update all enemies
+
+			//update player score
+			player.setScore(player.getScore() + score);
+		}
 	}
 
 	public void draw(Graphics2D g) {
-
 		// draw bg
 		bg.draw(g);
 
@@ -193,6 +264,10 @@ public class Level2State extends GameState {
 		for(int i = 0; i < dumbbells.size(); i++) {
 			dumbbells.get(i).draw(g);
 		}
+// Caesar code
+		for(int i = 0; i < juices.size(); i++) {
+			juices.get(i).draw(g);
+		}
 
 		// draw explosions
 		for(int i = 0; i < explosions.size(); i++) {
@@ -202,7 +277,10 @@ public class Level2State extends GameState {
 		}
 
 		// draw hud
+		if (player.getx() > 900 && player.getx() < 1350)
+			g.drawString("Certain walls can be moved through!",30,180);
 		hud.draw(g);
+
 
 	}
 
