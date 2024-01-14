@@ -6,7 +6,7 @@ import TileMap.TileMap;
 
 public class Enemy extends MapObject {
 	protected int health;
-	protected int maxHealth;
+	public int maxHealth;
 	protected boolean dead;
 	public boolean awardsPoints = true;
 	protected int damage;

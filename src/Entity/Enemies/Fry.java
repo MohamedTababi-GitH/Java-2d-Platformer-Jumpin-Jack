@@ -21,7 +21,6 @@ public class Fry extends Enemy{
         super(tm);
         //it should start out as patrolling
         state = EnemyState.START;
-
         moveSpeed = 0.4;
         maxSpeed = 0.8;
         fallSpeed = 0.2;

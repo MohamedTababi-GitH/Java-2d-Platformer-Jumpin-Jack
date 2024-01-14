@@ -203,10 +203,12 @@ public class Level3State extends GameState {
 				explosions.add(
 						new Explosion(e.getx(), e.gety()));
 				if(e.awardsPoints) {
-					if(e.equals((Burg)e))
-						score+=50;
-					else score +=100;
+					score +=50;
 					player.setScore(player.getScore() + score);
+					if (e.maxHealth != 5)
+						player.setScore(player.getScore() + (score/2));
+					if (e.maxHealth > 5)
+						player.setScore(player.getScore() + (score/2));
 				}
 			}
 		}

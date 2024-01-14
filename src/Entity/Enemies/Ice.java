@@ -32,7 +32,7 @@ public class Ice extends Enemy{
         cwidth = 20;
         cheight = 20;
 
-        health = maxHealth = 10;
+        health = maxHealth = 9;
         damage = 1;
 
 
