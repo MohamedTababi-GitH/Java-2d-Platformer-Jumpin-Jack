@@ -105,7 +105,6 @@ public class Level5State extends GameState {
 				new Point(1815, 195),
 				new Point(2115, 195),
 				new Point(2265, 105),
-				new Point(2565, 105),
 		};
 		for(int i = 0; i < points.length; i++) {
 			if (i%5==0){
