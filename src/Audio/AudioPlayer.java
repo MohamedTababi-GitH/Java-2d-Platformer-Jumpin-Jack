@@ -1,6 +1,7 @@
 package Audio;
 
 import javax.sound.sampled.*;
+import java.io.InputStream;
 
 public class AudioPlayer {
 	
@@ -10,13 +11,12 @@ public class AudioPlayer {
 	public AudioPlayer(String s) {
 		
 		try {
-			
-			AudioInputStream ais =
-				AudioSystem.getAudioInputStream(
-					getClass().getResourceAsStream(
-						s
-					)
-				);
+			InputStream audioStream = getClass().getResourceAsStream(s);
+			if (audioStream == null) {
+				throw new RuntimeException("Audio resource not found: " + s);
+			}
+
+			AudioInputStream ais = AudioSystem.getAudioInputStream(audioStream);
 			AudioFormat baseFormat = ais.getFormat();
 			AudioFormat decodeFormat = new AudioFormat(
 				AudioFormat.Encoding.PCM_SIGNED,
